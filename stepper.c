@@ -83,12 +83,15 @@ uint8_t stepper_ch_speed(char *spd){
  * Check endswitches
  * @return 0 if none pressed, 1 if "-", 2 if "+"
  */
-static uint8_t check_endsw();
+static uint8_t check_endsw(){
+    return 0;
+}
 
 /**
  * move stepper number Nmotor by Nsteps steps
- * @return 1 if Nmotor or Nsteps are bad values
- *         2 if motor already on endswitch in given direction
+ * @return  0 if all OK
+ *          1 if Nmotor or Nsteps are bad values
+ *          2 if motor already on endswitch in given direction
  */
 uint8_t stepper_move(uint8_t Nmotor, int16_t Nsteps){
     if(!Nmotor || Nmotor > 6 || !Nsteps) return 1;
@@ -106,8 +109,9 @@ uint8_t stepper_move(uint8_t Nmotor, int16_t Nsteps){
         PORTD |= 0xfc;
         return 2; // already at end-switch in given direction
     }
-
+    return 0;
 }
+
 
 static void stop_motor(uint8_t Nmotor){
     // turn off all pulses to place motor in free state & prevent undesirable behaviour
