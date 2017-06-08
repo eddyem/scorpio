@@ -36,5 +36,37 @@
 #include "uart.h"
 #include "stepper.h"
 
+#ifdef EBUG
+#define DBG(x) usart_send(x)
+#else
+#define DBG(x)
+#endif
+
+// #define ()  do{}while(0)
+#if defined (__AVR_ATmega8535__)
+    // original MCU
+    #define STPRS_OFF() do{PORTD |= 0xfc; PORTC |= 0x0f;}while(0)
+    #define DDRAB       DDRA
+    #define PORTAB      PORTA
+    #define LED1_PIN    (_BV(0))
+    #define LED2_PIN    (_BV(1))
+    #define LED3_PIN    (_BV(2))
+    #define FLAT_PIN    (_BV(5))
+    #define NEON_PIN    (_BV(6))
+    #define SHTR_PIN    (_BV(7))
+#else
+    // arduino devboard with stepper
+    #define STPRS_OFF() do{PORTD |= 0xfc; PORTC &= 0xf0;}while(0)
+    #define DDRAB       DDRB
+    #define PORTAB      PORTB
+    #define FLAT_PIN    (_BV(0))
+    #define NEON_PIN    (_BV(1))
+    #define SHTR_PIN    (_BV(2))
+    #define LED1_PIN    (_BV(3))
+    #define LED2_PIN    (_BV(4))
+    #define LED3_PIN    (_BV(5))
+#endif
+
+#define PORTAB_PINS (FLAT_PIN | NEON_PIN | SHTR_PIN | LED1_PIN | LED2_PIN | LED3_PIN)
 
 #endif // __INCLUDES_H__

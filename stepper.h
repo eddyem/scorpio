@@ -27,14 +27,16 @@
 
 #include <stdint.h>
 
-extern uint8_t stepper_pulse;
+extern volatile uint8_t stepper_pulse;
+extern uint16_t Steps_left;
 
 // setup timer
 void stepper_setup();
 void stepper_process();
 
 uint8_t stepper_ch_speed(char *spd);
-
 uint8_t stepper_move(uint8_t Nmotor, int16_t Nsteps);
+
+void stepper_get_esw(uint8_t Nmotor);
 
 #endif // __STEPPER_H__

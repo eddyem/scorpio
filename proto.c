@@ -35,65 +35,100 @@ uint8_t move_motor(char *cmd){
     cmd = omit_whitespace(cmd+1);
     int16_t steps;
     if(!readInt(cmd, &steps)) return 0;
+    #ifdef EBUG
     usart_send("Move motor ");
     printUint((uint8_t*)&N, 1);
     usart_send(" for ");
     print_long((uint32_t)steps);
     usart_send("steps\n");
-    return stepper_move(N, steps);
+    #endif
+    if(steps) return stepper_move(N, steps);
+    else{ // steps == 0 - just check endswitches
+        stepper_get_esw(N);
+        return 0;
+    }
 }
 
-extern void print_time();
+/**
+ * Switch relay on/off depending on cmd value
+ * 1 - on, 0 - off
+ * @param pin - pin to change
+ * @param N - second symbol of command ([2 N ...])
+ */
+uint8_t relay(char *cmd, uint8_t pin, char N){
+    if(*cmd == '-'){ // just check
+        char ans[] = "[2 N St=1]\n";
+        ans[3] = N;
+        if(PORTAB & pin) ans[8] = '0'; // off
+        usart_send(ans);
+        return 1;
+    }
+    if(*cmd == '0'){ // turn OFF
+        PORTAB |= pin;
+        return 1;
+    }
+    if(*cmd == '1'){ // turn ON
+        PORTAB &= ~pin;
+        return 1;
+    }
+    return 0;
+}
+
+//extern void print_time();
+extern uint8_t LEDs[3]; // LEDs shining time
+
+void LEDshine(char *cmd, uint8_t N){
+    int16_t s;
+    if(!readInt(cmd, &s)) return;
+    if(s < 0 || s > 255) return;
+    LEDs[N] = (uint8_t)s;
+}
 
 /**
  * process commands from user buffer
  * @return 1 if all OK
  */
-uint8_t process_commands(){
-    char *cmd = omit_whitespace(&rx_buffer[1]);
-    switch(*cmd){
-        case 't':
-            print_time();
-            return 1;
-        break;
-        case '2':
-            cmd = omit_whitespace(cmd + 1);
-        break;
-        default:
-            return 0;
-    }
+uint8_t process_commands(char *cmd){
+    cmd = omit_whitespace(cmd + 1);
     if(*cmd > '0' && *cmd < '7')
         return move_motor(cmd);
-    switch(*cmd){
+    char s = *cmd;
+    cmd = omit_whitespace(cmd + 1);
+    switch(s){
         case '0':
-            usart_send("restart");
+            DBG("restart");
         break;
         case '7':
-            usart_send("Shutter");
+            DBG("Shutter");
+            relay(cmd, SHTR_PIN, '7');
         break;
         case '8':
-            usart_send("Neon");
+            DBG("Neon");
+            relay(cmd, NEON_PIN, '8');
         break;
         case '9':
-            usart_send("Flat");
+            DBG("Flat");
+            relay(cmd, FLAT_PIN, '9');
         break;
         case 'a':
-            cmd = omit_whitespace(cmd + 1);
             return stepper_ch_speed(cmd);
         break;
         case 'b':
-            usart_send("LED1");
+            DBG("LED1");
+            LEDshine(cmd, 0);
         break;
         case 'c':
-            usart_send("LED2");
+            DBG("LED2");
+            LEDshine(cmd, 1);
         break;
         case 'd':
-            usart_send("LED3");
+            DBG("LED3");
+            LEDshine(cmd, 2);
         break;
         default:
             return 0;
     }
-    usart_send("\n");
+    DBG("\n");
     return 1;
 }
 
@@ -102,24 +137,27 @@ void process_string(){
     uint8_t noerr = 1, oldflags = usart_flags;
     usart_flags &= ~(U_RX_COMPLETE | U_RX_OVERFL | U_RX_ERROR);
     if(oldflags & U_RX_OVERFL){
-        usart_send("Input buffer overflow\n");
+        DBG("Input buffer overflow\n");
         noerr = 0;
     }
     if(oldflags & U_RX_ERROR){
-        usart_send("Rx error\n");
+        DBG("Rx error\n");
         noerr = 0;
     }
     if(rx_bufsize < 3 || rx_buffer[0] != '[' || rx_buffer[rx_bufsize - 2] != ']'){
+        //if(rx_buffer[0] == 't'){ print_time(); return; }
         rx_bufsize = 0;
-        usart_send("Enter \"[cmd]\"\n");
+        DBG("Enter \"[cmd]\"\n");
         noerr = 0;
     }
     if(noerr){ // echo back given string
         rx_buffer[rx_bufsize] = 0;
+        char *cmd = omit_whitespace(&rx_buffer[1]);
+        if(*cmd != '2') return;
         uint8_t rbs = rx_bufsize;
         rx_bufsize = 0;
         usart_send(rx_buffer);
         rx_buffer[rbs - 2] = 0;
-        process_commands();
+        process_commands(cmd);
     }
 }

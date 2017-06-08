@@ -22,10 +22,7 @@
  */
 
 #include "includes.h"
-
-#define LED_PIN (_BV(5))
-
-
+/*
 volatile uint16_t Milliseconds = 0, Seconds = 0, days = 0;
 
 void print_time(){
@@ -35,21 +32,16 @@ void print_time(){
     usart_send("s");
     printUint((uint8_t*)&Milliseconds, 2);
     usart_send("ms\n");
-}
+}*/
 
 int main() {
-    // LED for debug
-    DDRB |= LED_PIN;
     /** setup all other pins **/
-    PORTD |= 0xfc; // turn off steppers before configuring to output
+    STPRS_OFF(); // turn off steppers before configuring to output
     DDRD = 0xfc; // steppers
-    PORTD |= 0x0f;
     DDRC = 0x0f; // steppers diagram
     // 328p have no port A
-    #if defined (__AVR_ATmega8535__)
-    DDRA = 0xe0; // flat, neon, shutter
-    #endif
-
+    PORTAB |= FLAT_PIN | NEON_PIN | SHTR_PIN; // turn all off
+    DDRAB = PORTAB_PINS;
 
     /** USART config **/
     // set baudrate (using macros from util/setbaud.h)
@@ -65,11 +57,13 @@ int main() {
     UCSR0B = _BV(RXEN0) | _BV(TXEN0) | _BV(RXCIE0);   // Enable RX and TX, enable RX interrupt
 
     /** setup timer 0 - system timer **/
-    // set prescaler to 64 and start the timer
+    // set prescaler to 8 and start the timer (2MHz*256 = 0.128ms period)
     #if defined (__AVR_ATmega8535__)
-    TCCR0 |= _BV(CS01) | _BV(CS00);
+    //TCCR0 |= _BV(CS01) | _BV(CS00); // /64
+    TCCR0 |= _BV(CS01);
     #else
-    TCCR0B |= _BV(CS01) | _BV(CS00);
+    //TCCR0B |= _BV(CS01) | _BV(CS00);
+    TCCR0B |= _BV(CS01);
     #endif
     TIMSK0 |= _BV(TOIE0);
 
@@ -81,22 +75,33 @@ int main() {
     while(1){
         wdt_reset();
         if(stepper_pulse) stepper_process();
-    // testing blinking - remove later
-    if(Milliseconds == 500) PORTB |= LED_PIN;
-    else if(Milliseconds == 0) PORTB &= ~LED_PIN;
         if(usart_flags & U_RX_COMPLETE)
             process_string();
     }
     return 0;
 }
 
+uint8_t LEDs[3] = {20,20,20}; // LEDs shining time
+
 ISR(TIMER0_OVF_vect){
-    TCNT0 += 6;
-    if(++Milliseconds == 1000){
-        Milliseconds = 0;
-        if(++Seconds == 86400){
-            Seconds = 0;
-            ++days;
+    static uint8_t shi_counter = 0;/* tick_ctr = 0;
+    TCNT0 += 6; // 0.125ms period
+    if(++tick_ctr == 8){
+        tick_ctr = 0;
+        if(++Milliseconds == 1000){
+            Milliseconds = 0;
+            if(++Seconds == 86400){
+                Seconds = 0;
+                ++days;
+            }
         }
+    }*/
+    if(shi_counter == 0){ // turn all LEDs on
+        PORTAB |= LED1_PIN | LED2_PIN | LED3_PIN;
     }
+    // now check which LEDs we need to turn off
+    if(shi_counter == LEDs[0]) PORTAB &= ~LED1_PIN;
+    if(shi_counter == LEDs[1]) PORTAB &= ~LED2_PIN;
+    if(shi_counter == LEDs[2]) PORTAB &= ~LED3_PIN;
+    ++shi_counter;
 }

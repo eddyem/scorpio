@@ -8,6 +8,7 @@ AVR_STATUS_REGÃ65536÷0
 BADISR_vectÃ65536÷0
 BAUDÃ65536÷0
 BAUD_TOLÃ65536÷0
+DBGÃ131072Õ(x)÷0
 DD0Ã65536÷0
 DD1Ã65536÷0
 DD2Ã65536÷0
@@ -16,36 +17,28 @@ DD4Ã65536÷0
 DD5Ã65536÷0
 DD6Ã65536÷0
 DD7Ã65536÷0
+DDRABÃ65536÷0
+EBUGÃ65536÷0
 EMPTY_INTERRUPTÃ131072Õ(vector)÷0
+FLAT_PINÃ65536÷0
 FUSEMEMÃ65536÷0
 FUSESÃ65536÷0
-F_CPUÃ65536÷0
-INFINITYÃ65536÷0
 ISRÃ131072Õ(vector,...)÷0
 ISR_ALIASÃ131072Õ(vector,tgt)÷0
 ISR_ALIASOFÃ131072Õ(v)÷0
 ISR_BLOCKÃ65536÷0
 ISR_NAKEDÃ65536÷0
 ISR_NOBLOCKÃ65536÷0
-LED_PINÃ65536÷0
+LED1_PINÃ65536÷0
+LED2_PINÃ65536÷0
+LED3_PINÃ65536÷0
+LEDsÃ16384÷0œuint8_t
+LEDsÃ32768÷0œuint8_t
+LEDshineÃ16Õ(char *cmd, uint8_t N)÷0œvoid
 LOCKBITSÃ65536÷0
 LOCKBITS_DEFAULTÃ65536÷0
 LOCKMEMÃ65536÷0
-M_1_PIÃ65536÷0
-M_2_PIÃ65536÷0
-M_2_SQRTPIÃ65536÷0
-M_EÃ65536÷0
-M_LN10Ã65536÷0
-M_LN2Ã65536÷0
-M_LOG10EÃ65536÷0
-M_LOG2EÃ65536÷0
-M_PIÃ65536÷0
-M_PI_2Ã65536÷0
-M_PI_4Ã65536÷0
-M_SQRT1_2Ã65536÷0
-M_SQRT2Ã65536÷0
-MillisecondsÃ16384÷0œvolatile uint16_t
-NANÃ65536÷0
+NEON_PINÃ65536÷0
 PIN0Ã65536÷0
 PIN1Ã65536÷0
 PIN2Ã65536÷0
@@ -62,7 +55,10 @@ PORT4Ã65536÷0
 PORT5Ã65536÷0
 PORT6Ã65536÷0
 PORT7Ã65536÷0
+PORTABÃ65536÷0
+PORTAB_PINSÃ65536÷0
 RX_BUFFER_SIZEÃ65536÷0
+SHTR_PINÃ65536÷0
 SIGNALÃ131072Õ(vector)÷0
 SPÃ65536÷0
 SPLÃ65536÷0
@@ -75,9 +71,13 @@ SREG_SÃ65536÷0
 SREG_TÃ65536÷0
 SREG_VÃ65536÷0
 SREG_ZÃ65536÷0
-SecondsÃ16384÷0œuint16_t
+STPRS_OFFÃ131072Õ()÷0
+Steps_leftÃ16384÷0œuint16_t
+Steps_leftÃ32768÷0œuint16_t
 TIMER0_OVF_vectÃ16Õ(void)÷0œvoid
 TIMER0_OVF_vectÃ1024Õ(void)÷0œ” void
+TIMER1_COMPA_vectÃ16Õ(void)÷0œvoid
+TIMER1_COMPA_vectÃ1024Õ(void)÷0œ” void
 TX_BUFFER_SIZEÃ65536÷0
 UBRRH_VALUEÃ65536÷0
 UBRRL_VALUEÃ65536÷0
@@ -92,6 +92,7 @@ U_RX_ERRORÃ65536÷0
 U_RX_OVERFLÃ65536÷0
 U_TX_COMPLETEÃ65536÷0
 U_TX_ERRORÃ65536÷0
+UstepÃ16384÷0œint8_t
 WDTO_120MSÃ65536÷0
 WDTO_15MSÃ65536÷0
 WDTO_1SÃ65536÷0
@@ -136,8 +137,6 @@ _SFR_MEM8Ã131072Õ(mem_addr)÷0
 _SFR_MEM_ADDRÃ131072Õ(sfr)÷0
 _SFR_WORDÃ131072Õ(sfr)÷0
 _STDC_PREDEF_HÃ65536÷0
-_UTIL_DELAY_BASIC_H_Ã65536÷0
-_UTIL_DELAY_H_Ã65536÷0
 _VECTORÃ131072Õ(N)÷0
 _WD_CHANGE_BITÃ65536÷0
 _WD_CONTROL_REGÃ65536÷0
@@ -150,7 +149,6 @@ __ATOMIC_HLE_RELEASEÃ65536÷0
 __ATOMIC_RELAXEDÃ65536÷0
 __ATOMIC_RELEASEÃ65536÷0
 __ATOMIC_SEQ_CSTÃ65536÷0
-__ATTR_CONST__Ã65536÷0
 __AVR_LIBC_DATE_Ã65536÷0
 __AVR_LIBC_DATE_STRING__Ã65536÷0
 __AVR_LIBC_MAJOR__Ã65536÷0
@@ -253,7 +251,7 @@ __GNUG__Ã65536÷0
 __GXX_ABI_VERSIONÃ65536÷0
 __GXX_RTTIÃ65536÷0
 __GXX_WEAK__Ã65536÷0
-__HAS_DELAY_CYCLESÃ65536÷0
+__INCLUDES_H__Ã65536÷0
 __INT16_CÃ131072Õ(c)÷0
 __INT16_MAX__Ã65536÷0
 __INT16_TYPE__Ã65536÷0
@@ -306,7 +304,6 @@ __LDBL_MIN__Ã65536÷0
 __LONG_LONG_MAX__Ã65536÷0
 __LONG_MAX__Ã65536÷0
 __LP64__Ã65536÷0
-__MATH_HÃ65536÷0
 __MMX__Ã65536÷0
 __OPTIMIZE_SIZE__Ã65536÷0
 __OPTIMIZE__Ã65536÷0
@@ -353,6 +350,7 @@ __STDC_ISO_10646__Ã65536÷0
 __STDC_NO_THREADS__Ã65536÷0
 __STDC__Ã65536÷0
 __STDINT_H_Ã65536÷0
+__STEPPER_H__Ã65536÷0
 __STRINGIFYÃ131072Õ(x)÷0
 __UART_H__Ã65536÷0
 __UINT16_CÃ131072Õ(c)÷0
@@ -416,37 +414,12 @@ __unixÃ65536÷0
 __unix__Ã65536÷0
 __x86_64Ã65536÷0
 __x86_64__Ã65536÷0
-_delay_loop_1Ã16Õ(uint8_t __count)÷0œvoid
-_delay_loop_1Ã1024Õ(uint8_t __count)÷0œinline void
-_delay_loop_2Ã16Õ(uint16_t __count)÷0œvoid
-_delay_loop_2Ã1024Õ(uint16_t __count)÷0œinline void
-_delay_msÃ16Õ(double __ms)÷0œvoid
-_delay_msÃ1024Õ(double __ms)÷0œinline void
-_delay_usÃ16Õ(double __us)÷0œvoid
-_delay_usÃ1024Õ(double __us)÷0œinline void
-acosfÃ65536÷0
-asinfÃ65536÷0
-atan2fÃ65536÷0
-atanfÃ65536÷0
 bit_is_clearÃ131072Õ(sfr,bit)÷0
 bit_is_setÃ131072Õ(sfr,bit)÷0
-cbrtfÃ65536÷0
-ceilfÃ65536÷0
+check_endswÃ16Õ()÷0œuint8_t
 cliÃ131072Õ()÷0
-copysignfÃ65536÷0
-cosfÃ65536÷0
-coshfÃ65536÷0
-daysÃ16384÷0œuint16_t
-expfÃ65536÷0
-fabsfÃ65536÷0
-fdimfÃ65536÷0
-floorfÃ65536÷0
-fmafÃ65536÷0
-fmaxfÃ65536÷0
-fminfÃ65536÷0
-fmodfÃ65536÷0
-frexpfÃ65536÷0
-hypotfÃ65536÷0
+cur_motorÃ16384÷0œuint8_t
+directionÃ16384÷0œuint8_t
 int16_tÃ4096÷0œsigned int
 int32_tÃ4096÷0œsigned int
 int64_tÃ4096÷0œsigned int
@@ -462,48 +435,43 @@ int_least64_tÃ4096÷0œint64_t
 int_least8_tÃ4096÷0œint8_t
 intmax_tÃ4096÷0œint64_t
 intptr_tÃ4096÷0œint16_t
-isfinitefÃ65536÷0
-isinffÃ65536÷0
-isnanfÃ65536÷0
-ldexpfÃ65536÷0
 linuxÃ65536÷0
-log10fÃ65536÷0
-logfÃ65536÷0
 loop_until_bit_is_clearÃ131072Õ(sfr,bit)÷0
 loop_until_bit_is_setÃ131072Õ(sfr,bit)÷0
-lrintfÃ65536÷0
-lroundfÃ65536÷0
 mainÃ16Õ()÷0œint
 move_motorÃ16Õ(char *cmd)÷0œuint8_t
-omit_watespaceÃ16Õ(char *str)÷0œchar *
-omit_watespaceÃ1024Õ(char *str)÷0œchar *
-powfÃ65536÷0
+omit_whitespaceÃ16Õ(char *str)÷0œchar *
+omit_whitespaceÃ1024Õ(char *str)÷0œchar *
 printUintÃ16Õ(uint8_t *val, uint8_t len)÷0œvoid
 printUintÃ1024Õ(uint8_t *val, uint8_t len)÷0œvoid
 print_longÃ16Õ(int32_t Number)÷0œvoid
 print_longÃ1024Õ(int32_t Number)÷0œvoid
-print_timeÃ16Õ()÷0œvoid
-print_timeÃ1024Õ()÷0œvoid
-process_commandsÃ16Õ()÷0œuint8_t
+process_commandsÃ16Õ(char *cmd)÷0œuint8_t
 process_stringÃ16Õ()÷0œvoid
 process_stringÃ1024Õ()÷0œvoid
 readIntÃ16Õ(char *buff, int16_t *val)÷0œuint8_t
 readIntÃ1024Õ(char *buff, int16_t *val)÷0œuint8_t
+relayÃ16Õ(char *cmd, uint8_t pin, char N)÷0œuint8_t
 retiÃ131072Õ()÷0
-roundfÃ65536÷0
 rx_bufferÃ16384÷0œchar
 rx_bufferÃ32768÷0œchar
 rx_bufsizeÃ16384÷0œvolatile uint8_t
 rx_bufsizeÃ32768÷0œvolatile uint8_t
 seiÃ131072Õ()÷0
-signbitfÃ65536÷0
-sinfÃ65536÷0
-sinhfÃ65536÷0
-sqrtfÃ65536÷0
-squarefÃ65536÷0
-tanfÃ65536÷0
-tanhfÃ65536÷0
-truncfÃ65536÷0
+stepper_ch_speedÃ16Õ(char *spd)÷0œuint8_t
+stepper_ch_speedÃ1024Õ(char *spd)÷0œuint8_t
+stepper_get_eswÃ16Õ(uint8_t Nmotor)÷0œvoid
+stepper_get_eswÃ1024Õ(uint8_t Nmotor)÷0œvoid
+stepper_moveÃ16Õ(uint8_t Nmotor, int16_t Nsteps)÷0œuint8_t
+stepper_moveÃ1024Õ(uint8_t Nmotor, int16_t Nsteps)÷0œuint8_t
+stepper_processÃ16Õ()÷0œvoid
+stepper_processÃ1024Õ()÷0œvoid
+stepper_pulseÃ16384÷0œvolatile uint8_t
+stepper_pulseÃ32768÷0œvolatile uint8_t
+stepper_setupÃ16Õ()÷0œvoid
+stepper_setupÃ1024Õ()÷0œvoid
+stop_motorsÃ16Õ()÷0œvoid
+stop_motorsÃ1024Õ()÷0œvoid
 tx_bufferÃ16384÷0œchar
 tx_bufsizeÃ16384÷0œvolatile uint8_t
 tx_idxÃ16384÷0œuint8_t
@@ -527,6 +495,7 @@ usart_flagsÃ16384÷0œvolatile uint8_t
 usart_flagsÃ32768÷0œvolatile uint8_t
 usart_sendÃ16Õ(char *Str)÷0œint
 usart_sendÃ1024Õ(char *Str)÷0œint
+ustepsÃ16384÷0œconst uint8_t
 wdt_disableÃ131072Õ()÷0
 wdt_enableÃ131072Õ(value)÷0
 wdt_resetÃ131072Õ()÷0

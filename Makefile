@@ -1,12 +1,13 @@
 ### https://habrahabr.ru/post/247663/
 
-NAME = scorpio2
+NAME = scorpio
 
 OBJCOPY = avr-objcopy
 OBJDUMP = avr-objdump
 CC      = avr-gcc
 OPTIMIZE= -Os
 DEFS    = -DBAUD=9600
+DEFS   += -DEBUG
 LIBS    =
 
 SRC=$(wildcard *.c)
