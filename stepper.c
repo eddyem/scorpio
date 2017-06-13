@@ -57,8 +57,21 @@
 // [1324] = 1000, 1010, 0010, 0110, 0100, 0101, 0001, 1001 - bipolar
 // 1000, 1010, 0010, 0110, 0100, 0101, 0001, 1001 - half-step
 // 1010, 0110, 0101, 1001 - full step
-static const uint8_t usteps[8] = {8, 12, 4, 6, 2, 3, 1, 9}; // ULN - unipolar, active 1
+//static const uint8_t usteps[8] = {8, 12, 4, 6, 2, 3, 1, 9}; // ULN - unipolar, active 1
 //static const uint8_t usteps[8] = {7, 3, 11, 9, 13, 12, 14, 6}; // unipolar, active is 0
+static const uint8_t usteps_matrix[8][8] = {
+    {0b1000, 0b1100, 0b0100, 0b0110, 0b0010, 0b0011, 0b0001, 0b1001}, // [1234]
+    {0b0010, 0b0110, 0b0100, 0b1100, 0b1000, 0b1001, 0b0001, 0b0011}, // [3214]
+    {0b1000, 0b1001, 0b0001, 0b0011, 0b0010, 0b0110, 0b0100, 0b1100}, // [1432]
+    {0b1000, 0b1010, 0b0010, 0b0110, 0b0100, 0b0101, 0b0001, 0b1001}, // [1324]
+    // inversion: cat | sed -e 's/0b/x/g' -e 's/0/y/g' -e 's/1/0/g' -e 's/y/1/g' -e s'/x/0b/g'
+    {0b0111, 0b0011, 0b1011, 0b1001, 0b1101, 0b1100, 0b1110, 0b0110}, // [1234]
+    {0b1101, 0b1001, 0b1011, 0b0011, 0b0111, 0b0110, 0b1110, 0b1100}, // [3214]
+    {0b0111, 0b0110, 0b1110, 0b1100, 0b1101, 0b1001, 0b1011, 0b0011}, // [1432]
+    {0b0111, 0b0101, 0b1101, 0b1001, 0b1011, 0b1010, 0b1110, 0b0110}, // [1324]
+};
+
+uint8_t const *usteps = usteps_matrix[0];
 
 static int8_t Ustep = 0; // current microstep count
 uint16_t Steps_left; // steps left to proceed (absolute value)
@@ -66,8 +79,6 @@ static uint8_t direction = 0; // ==1 if rotate CCW
 static uint8_t cur_motor = 0; // current motor number
 
 volatile uint8_t stepper_pulse = 0; // interrupt flag, used in main.c
-
-static void stop_motors();
 
 void stepper_setup(){
     TCCR1B |= _BV(WGM12); // configure timer1 for CTC mode, TOP is OCR1A
@@ -145,7 +156,7 @@ uint8_t stepper_move(uint8_t Nmotor, int16_t Nsteps){
     return 1;
 }
 
-static void stop_motors(){
+void stop_motors(){
     stepper_get_esw(cur_motor);
     // turn off all pulses to place motor in free state & prevent undesirable behaviour
     STPRS_OFF();
@@ -203,8 +214,20 @@ void stepper_get_esw(uint8_t Nmotor){
 }
 
 /**
+ * User can change current stepper phases table
+ * N - position in table from 'a' (0) to 'h' (7)
+ * return 1 if all OK
+ */
+uint8_t chk_stpr_cmd(char N){
+    if(N < 'a' || N > 'h') return 0;
+    usteps = usteps_matrix[N-'a'];
+    return 1;
+}
+
+/**
  * Timer 1 used to generate stepper pulses
  */
 ISR(TIMER1_COMPA_vect){
     stepper_pulse = 1; // say that we can generate next microstep
 }
+

@@ -95,8 +95,9 @@ uint8_t process_commands(char *cmd){
     char s = *cmd;
     cmd = omit_whitespace(cmd + 1);
     switch(s){
-        case '0':
+        case '0': // stop motors
             DBG("restart");
+            stop_motors();
         break;
         case '7':
             DBG("Shutter");
@@ -145,9 +146,14 @@ void process_string(){
         noerr = 0;
     }
     if(rx_bufsize < 3 || rx_buffer[0] != '[' || rx_buffer[rx_bufsize - 2] != ']'){
+        #ifdef EBUG
+        usart_send(rx_buffer);
+        #endif
+        if(!chk_stpr_cmd(rx_buffer[0])){
+            DBG("Enter \"[cmd]\"\n");
+        }
         //if(rx_buffer[0] == 't'){ print_time(); return; }
         rx_bufsize = 0;
-        DBG("Enter \"[cmd]\"\n");
         noerr = 0;
     }
     if(noerr){ // echo back given string

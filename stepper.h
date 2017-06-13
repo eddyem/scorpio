@@ -36,7 +36,9 @@ void stepper_process();
 
 uint8_t stepper_ch_speed(char *spd);
 uint8_t stepper_move(uint8_t Nmotor, int16_t Nsteps);
+void stop_motors();
 
 void stepper_get_esw(uint8_t Nmotor);
+uint8_t chk_stpr_cmd(char N);
 
 #endif // __STEPPER_H__

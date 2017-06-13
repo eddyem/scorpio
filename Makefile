@@ -10,29 +10,29 @@ DEFS    = -DBAUD=9600
 DEFS   += -DEBUG
 LIBS    =
 
-SRC=$(wildcard *.c)
-HEX     = $(NAME).hex
-ELF     = $(NAME).elf
-OBJECTS = $(SRC:%.c=%.o)
-
 # controller
-DEVICE  = atmega328p
-#atmega8535
+DEVICE  = atmega8535
+#Тактовая частота 8 МГц
+CLOCK   = 8000000
+# partno (for avrdude)
+PARTNO  = m8535
 
 CFLAGS  = -g -Wall $(OPTIMIZE) $(DEFS)
 LDFLAGS = -Wl,-Map,$(NAME).map
 
 # programmer (for avrdude)
-PROGRAMMER = arduino
-# partno (for avrdude)
-PARTNO  = m328p
+PROGRAMMER = avrisp
+
 # serial port device (for avrdude)
 SERPORT = /dev/ttyUSB0
-#Тактовая частота 16 МГц
-CLOCK   = 16000000
+
+SRC=$(wildcard *.c)
+HEX     = $(NAME).hex
+ELF     = $(NAME).elf
+OBJECTS = $(SRC:%.c=%.o)
 
 # avrdude command from arduino IDE
-AVRDUDE = avrdude -C/usr/share/arduino/hardware/tools/avrdude.conf -v -p$(PARTNO) -c$(PROGRAMMER) -P$(SERPORT) -b115200 -D
+AVRDUDE = avrdude -C/usr/share/arduino/hardware/tools/avrdude.conf -v -p$(PARTNO) -c$(PROGRAMMER) -P$(SERPORT) -b19200 -D
 
 COMPILE = $(CC) $(CFLAGS) -mmcu=$(DEVICE) -DF_CPU=$(CLOCK)
 
@@ -40,7 +40,7 @@ all:	$(HEX) lst
 
 $(ELF): $(OBJECTS)
 	@echo "ELF"
-	@$(COMPILE) -o $(ELF) $(OBJECTS) $(LIBS)
+	@$(COMPILE) $(LDFLAGS) -o $(ELF) $(OBJECTS) $(LIBS)
 
 $(HEX): $(ELF)
 	@echo "HEX"
@@ -65,7 +65,7 @@ lst:  $(NAME).lst
 
 flash:	all
 	@echo "Flash"
-	@$(AVRDUDE) -U flash:w:$(HEX):i
+	$(AVRDUDE) -U flash:w:$(HEX):i
 
 clean:
 	@echo "Clean"

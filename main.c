@@ -45,6 +45,7 @@ int main() {
 
     /** USART config **/
     // set baudrate (using macros from util/setbaud.h)
+    #if !defined (__AVR_ATmega8535__)
     UBRR0H = UBRRH_VALUE;
     UBRR0L = UBRRL_VALUE;
 
@@ -52,6 +53,11 @@ int main() {
     UCSR0A |= _BV(U2X0);
     #else
     UCSR0A &= ~(_BV(U2X0));
+    #endif
+    #else // __AVR_ATmega8535__
+    UCSRA &= ~(_BV(U2X0));
+    UBRRH = 0;
+    UBRRL = 51;
     #endif
     UCSR0C = _BV(UCSZ01) | _BV(UCSZ00); // 8-bit data
     UCSR0B = _BV(RXEN0) | _BV(TXEN0) | _BV(RXCIE0);   // Enable RX and TX, enable RX interrupt
@@ -70,7 +76,9 @@ int main() {
     stepper_setup();
 
     sei(); // enable interrupts
+
     wdt_enable(WDTO_2S); // start watchdog
+    usart_send("Scorpio platform ready\n");
 
     while(1){
         wdt_reset();
@@ -104,4 +112,7 @@ ISR(TIMER0_OVF_vect){
     if(shi_counter == LEDs[1]) PORTAB &= ~LED2_PIN;
     if(shi_counter == LEDs[2]) PORTAB &= ~LED3_PIN;
     ++shi_counter;
+//    #if defined (__AVR_ATmega8535__)
+//    TCNT0 += 128;
+//    #endif
 }

@@ -48,6 +48,27 @@
     #define STPRS_OFF() do{PORTD |= 0xfc; PORTC |= 0x0f;}while(0)
     #define DDRAB       DDRA
     #define PORTAB      PORTA
+    // 8535 have common irq register for all timers
+    #define TIMSK0      TIMSK
+    #define TIMSK1      TIMSK
+    #define UCSR0A      UCSRA
+    #define UCSR0B      UCSRB
+    #define UCSR0C      UCSRC
+    #define UDRIE0      UDRIE
+    #define FE0         FE
+    #define UPE0        PE
+    #define DOR0        DOR
+    #define UDRIE0      UDRIE
+    #define UDR0        UDR
+    #define UBRR0H      UBRRH
+    #define UBRR0L      UBRRL
+    #define U2X0        U2X
+    #define UCSZ01      UCSZ1
+    #define UCSZ00      UCSZ0
+    #define RXEN0       RXEN
+    #define TXEN0       TXEN
+    #define RXCIE0      RXCIE
+
     #define LED1_PIN    (_BV(0))
     #define LED2_PIN    (_BV(1))
     #define LED3_PIN    (_BV(2))
