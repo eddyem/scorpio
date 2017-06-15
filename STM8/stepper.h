@@ -27,6 +27,7 @@
 
 #define MIN_STEP_LENGTH 125     // max speed == 1/(125us*16) = 500 steps per second
 
+extern volatile char Ustep;
 extern volatile U8 chk_esw;
 extern U8 cur_motor;
 

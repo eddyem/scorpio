@@ -114,21 +114,27 @@ int main() {
 
     setup_stepper_pins();
     RELAY_SETUP();
+    // setup endswitch selection pins
+    PORT(ESW_SEL_PORT, DDR) |= ESW_SEL_PINS;
+    PORT(ESW_SEL_PORT, CR1) |= ESW_SEL_PINS;
+    // Pullup to esw inputs
+    PORT(ESW_PORT, CR1) |= ESW_PINS;
 
     // enable all interrupts
     enableInterrupts();
 
-/*
+
     // Setup watchdog
+    IWDG_KR = KEY_ENABLE; // start watchdog
     IWDG_KR = KEY_ACCESS; // enable access to protected registers
     IWDG_PR = 6; // /256
     IWDG_RLR = 0xff; // max time for watchdog (1.02s)
-    IWDG_KR = KEY_ENABLE; // start watchdog
-*/
+
     // Loop
+    uart_write("Scorpio platform ready\n");
+    if(RST_SR) RST_SR = 0x1f; // clear reset flags writing 1
     do{
-        //if(RST_SR) RST_SR = 0x1f; // clear reset flags writing 1
-        //IWDG_KR = KEY_REFRESH; // refresh watchdog
+        IWDG_KR = KEY_REFRESH; // refresh watchdog
         if(uart_rdy){
             process_string();
         }

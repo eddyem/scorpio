@@ -6,7 +6,7 @@ LDFLAGS= -mstm8 --out-fmt-ihx -lstm8
 FLASHFLAGS=-cstlinkv2 -pstm8s105?4
 
 SRC=$(wildcard *.c)
-DEFS = -DEBUG
+#DEFS = -DEBUG
 
 OBJ=$(SRC:%.c=%.rel)
 TRASH=$(OBJ) $(SRC:%.c=%.rst) $(SRC:%.c=%.asm) $(SRC:%.c=%.lst)

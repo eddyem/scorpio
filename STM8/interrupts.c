@@ -91,12 +91,13 @@ INTERRUPT_HANDLER(TIM2_UPD_OVF_BRK_IRQHandler, 13){ // generate pulses for stepp
     U8 sw;
     if(TIM2_SR1 & TIM_SR1_UIF){
         TIM2_SR1 &= ~TIM_SR1_UIF; // take off flag
+        tmp = PORT(STP_PORT, ODR) & ~STP_PINS;
+        PORT(STP_PORT, ODR) = tmp | usteps[Ustep];
+
         if(Steps_left == 0){
             stop_motor();
             return;
         }
-        tmp = PORT(STP_PORT, ODR) & ~STP_PINS;
-        PORT(STP_PORT, ODR) = tmp | usteps[Ustep];
 
         sw = check_endsw();
         if(Dir){
@@ -109,13 +110,14 @@ INTERRUPT_HANDLER(TIM2_UPD_OVF_BRK_IRQHandler, 13){ // generate pulses for stepp
                 }
             }
         }else{
+            if(Ustep == 0 && sw == 2){ // check end-switches only @ full steps
+                stop_motor();
+                return;
+            }
             if(++Ustep > 7){
                 Ustep = 0;
                 --Steps_left;
-                if(sw == 2){
-                    stop_motor();
-                    return;
-                }
+
             }
         }
     }

@@ -102,6 +102,7 @@ U8 check_endsw(){
 U8 stepper_move(U8 Nmotor, int Nsteps){
     U8 c;
     if(!Nmotor || Nmotor > 6 || !Nsteps || Steps_left) return 0;
+    IWDG_KR = KEY_REFRESH; // refresh watchdog
 
     if(Nsteps < 0){
         Dir = 1;
@@ -109,11 +110,12 @@ U8 stepper_move(U8 Nmotor, int Nsteps){
     }else
         Dir = 0;
     Steps_left = Nsteps;
+    // select endswitch
+    ESW_SELECT(Nmotor);
+    // turn all motors OFF
     STPRS_OFF();
-
-    // turn all OFF
     // turn on the motor we need
-    PORT(STP_SEL_PORT, ODR) |= (1 << (Nmotor/2));
+    PORT(STP_SEL_PORT, ODR) |= (1 << ((Nmotor-1)/2));
     if(Nmotor & 1) PORT(STP_SEL_PORT, ODR) &= ~GPIO_PIN3;
     else PORT(STP_SEL_PORT, ODR) &= ~GPIO_PIN4;
     c = check_endsw();
@@ -133,6 +135,9 @@ U8 stepper_move(U8 Nmotor, int Nsteps){
 
 void stop_motor(){
     TIM2_CR1 &= ~TIM_CR1_CEN; // Turn off timer
+    // turn all motors OFF
+    STPRS_OFF();
+    Ustep = 0;
     Steps_left = 0;
     chk_esw = 1;
     DBG("stop\n");
@@ -156,16 +161,13 @@ U8 chk_stpr_cmd(char N){
 void stepper_get_esw(U8 Nmotor){
     U8 sw;
     char str[] = "[2 0 St=0]\n"; // 3 - motor number, 5 - endswitch (3 if none)
-    if(Nmotor == 0 || Nmotor > 7) return; // no running motor
-    STPRS_OFF();
-    PORT(STP_SEL_PORT, ODR) |= (1 << (Nmotor/2));
-    if(Nmotor & 1) PORT(STP_SEL_PORT, ODR) |= 1<<4;
-    else PORT(STP_SEL_PORT, ODR) |= 1<<5;
+    IWDG_KR = KEY_REFRESH; // refresh watchdog
+    if(Nmotor == 0 || Nmotor > 6) return; // no running motor
+    ESW_SELECT(Nmotor);
     str[3] = Nmotor + '0';
     sw = check_endsw();
     if(sw == 0) sw = 3;
     str[8] = sw + '0';
     uart_write(str);
-    STPRS_OFF();
-    cur_motor = 7;
+    cur_motor = 0;
 }

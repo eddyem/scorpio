@@ -40,7 +40,7 @@ void UART_send_byte(U8 byte){
 }*/
 
 void uart_write(char *str){
-    while(tx_len);
+    while(tx_len) {IWDG_KR = KEY_REFRESH;}
     UART2_CR2 &= ~UART_CR2_TIEN;
     tx_idx = 0;
     do{
@@ -117,6 +117,7 @@ void print_long(long Number){
 U8 readInt(char *buff, int *val){
     U8 sign = 0, rb, bad = 1;
     long R = 0;
+    IWDG_KR = KEY_REFRESH; // refresh watchdog
     //usart_send("readInt, buff=");
     //usart_send(buff);
     if(*buff == '-'){
@@ -128,7 +129,7 @@ U8 readInt(char *buff, int *val){
         if(rb < '0' || rb > '9') break;
         bad = 0;
         R = R * 10L + rb - '0';
-        if(R > 0x7fff){ // bad value
+        if(R > 0x7ffe){ // bad value
             bad = 1;
             break;
         }

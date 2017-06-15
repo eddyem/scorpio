@@ -34,7 +34,8 @@
 U8 move_motor(char *cmd){
     U8 N = (U8)*cmd - '0';
     int steps;
-    if(N < 1 || N > 6) return 0;
+    if(N < 1 || N > 6 || Steps_left) return 0;
+    IWDG_KR = KEY_REFRESH; // refresh watchdog
     cmd = omit_whitespace(cmd+1);
     if(!readInt(cmd, &steps)) return 0;
     #ifdef EBUG
@@ -47,7 +48,8 @@ U8 move_motor(char *cmd){
 
     if(steps) return stepper_move(N, steps);
     else{ // steps == 0 - just check endswitches
-        stepper_get_esw(N);
+        cur_motor = N;
+        chk_esw = 1;
         return 0;
     }
 }
@@ -59,6 +61,7 @@ U8 move_motor(char *cmd){
  */
 U8 relay(char *cmd, char N){
     U8 on = 0;
+    IWDG_KR = KEY_REFRESH; // refresh watchdog
     if(*cmd == '-'){ // just check
         char ans[] = "[2 N St=1]\n";
         ans[3] = N;
@@ -77,7 +80,7 @@ U8 relay(char *cmd, char N){
         }
         if(!on) ans[8] = '0'; // off
         uart_write(ans);
-        return 1;
+        return 0; // not echo previous command
     }
     if(*cmd == '0'){ // turn OFF
         switch (N){
@@ -141,6 +144,7 @@ void LEDshine(char *cmd, U8 N){
  */
 U8 process_commands(char *cmd){
     char s;
+    IWDG_KR = KEY_REFRESH; // refresh watchdog
     cmd = omit_whitespace(cmd + 1);
     if(*cmd > '0' && *cmd < '7')
         return move_motor(cmd);
@@ -151,6 +155,7 @@ U8 process_commands(char *cmd){
             uart_write("Steps_left=");
             print_long((long) Steps_left);
             uart_write("\n");
+            return 0;
         break;
         case '0': // stop motors
             DBG("restart");
@@ -159,15 +164,15 @@ U8 process_commands(char *cmd){
         break;
         case '7':
             DBG("Shutter");
-            relay(cmd, '7');
+            return relay(cmd, '7');
         break;
         case '8':
             DBG("Neon");
-            relay(cmd, '8');
+            return relay(cmd, '8');
         break;
         case '9':
             DBG("Flat");
-            relay(cmd, '9');
+            return relay(cmd, '9');
         break;
         case 'a':
             return stepper_ch_speed(cmd);
@@ -192,7 +197,8 @@ U8 process_commands(char *cmd){
 }
 
 void process_string(){
-    U8 rbs, noerr=1;
+    U8 rbs, noerr=1, ctr;
+    char buf[UART_BUF_LEN+1];
     char *cmd;
     if(uart_rdy == 0) return;
     uart_rdy = 0;
@@ -208,10 +214,11 @@ void process_string(){
         UART_rx[rx_idx] = 0;
         cmd = omit_whitespace(&UART_rx[1]);
         if(*cmd != '2') return;
+        for(ctr = 0; ctr <= rx_idx; ++ctr) buf[ctr] = UART_rx[ctr];
         rbs = rx_idx;
         rx_idx = 0;
-        uart_write(UART_rx);
         UART_rx[rbs - 2] = 0;
-        process_commands(cmd);
+        if(process_commands(cmd))
+            uart_write(buf);
     }
 }
