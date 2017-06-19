@@ -31,7 +31,7 @@ to working watchdog there's no need to make full system restart.
 * **[2 N xxx]**, where **N** is number from 1 to 6, **xxx** is number from -32767 to 32767 -- run
 stepper motor number **N** for given amount of steps; if stepper is at end-switch and can't go further,
 the answer would be **[2 N St=x]**, where **x** is 1 or 2 (depending on end-switch number);
-when all steps wuold be over (or motor will come to end-switch), controller will answer a status:
+when all steps would be over (or motor will come to end-switch), controller will answer a status:
 **[2 N St=x]**, if x==3 the stepper isn't at any end-switch.
 
 * **[2 N x]**, where **N** is number from 7 to 9 -- turn on/off or get status of relays (7 -- Shutter,

@@ -77,11 +77,11 @@ int main() {
     TIM1_ARRH = 0x0;
     TIM1_ARRL = 0xFF;
     TIM1_CCR1H = 0;
-    TIM1_CCR1L = 20;
+    TIM1_CCR1L = 1; // Minimal brightness
     TIM1_CCR2H = 0;
-    TIM1_CCR2L = 20;
+    TIM1_CCR2L = 1;
     TIM1_CCR3H = 0;
-    TIM1_CCR3L = 20;
+    TIM1_CCR3L = 1;
 
     // interrupts: none
     // PWM mode 1 - OC1M = 110

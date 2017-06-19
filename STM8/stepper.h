@@ -34,7 +34,7 @@ extern U8 cur_motor;
 extern volatile int Steps_left;
 extern U16 Stepper_speed;
 extern volatile char Dir;
-extern U8 *usteps;
+extern U8 usteps[];
 
 void setup_stepper_pins();
 U8 stepper_ch_speed(char *spd);

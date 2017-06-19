@@ -36,7 +36,7 @@ U8 move_motor(char *cmd){
     int steps;
     if(N < 1 || N > 6 || Steps_left) return 0;
     IWDG_KR = KEY_REFRESH; // refresh watchdog
-    cmd = omit_whitespace(cmd+1);
+    ++cmd;
     if(!readInt(cmd, &steps)) return 0;
     #ifdef EBUG
     uart_write("Move motor ");
@@ -145,11 +145,11 @@ void LEDshine(char *cmd, U8 N){
 U8 process_commands(char *cmd){
     char s;
     IWDG_KR = KEY_REFRESH; // refresh watchdog
-    cmd = omit_whitespace(cmd + 1);
+    ++cmd;
     if(*cmd > '0' && *cmd < '7')
         return move_motor(cmd);
     s = *cmd;
-    cmd = omit_whitespace(cmd + 1);
+    ++cmd;
     switch(s){
         case '?':
             uart_write("Steps_left=");
@@ -197,27 +197,16 @@ U8 process_commands(char *cmd){
 }
 
 void process_string(){
-    U8 rbs, noerr=1, ctr;
+    U8 noerr=1, ctr;
     char buf[UART_BUF_LEN+1];
-    char *cmd;
+    char *cmd = UART_rx;
     if(uart_rdy == 0) return;
     uart_rdy = 0;
-    if(rx_idx < 3 || UART_rx[0] != '[' || UART_rx[rx_idx - 2] != ']'){
-        if(!chk_stpr_cmd(UART_rx[0])){
-            DBG("Enter \"[cmd]\"\n");
-        }
-        //if(rx_buffer[0] == 't'){ print_time(); return; }
-        rx_idx = 0;
-        noerr = 0;
-    }
     if(noerr){ // echo back given string
-        UART_rx[rx_idx] = 0;
-        cmd = omit_whitespace(&UART_rx[1]);
+        ++cmd;
         if(*cmd != '2') return;
         for(ctr = 0; ctr <= rx_idx; ++ctr) buf[ctr] = UART_rx[ctr];
-        rbs = rx_idx;
         rx_idx = 0;
-        UART_rx[rbs - 2] = 0;
         if(process_commands(cmd))
             uart_write(buf);
     }

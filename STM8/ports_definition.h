@@ -67,7 +67,6 @@
 // PC5-PC7 - endswitch address (through multiplexer)
 #define ESW_SEL_PORT    PC
 #define ESW_SEL_PINS    0xe0
-#define ESW_SELECT(NUM) do{register U8 C=PC_ODR & ~ESW_SEL_PINS; C |= ((NUM-1)<<5); PC_ODR = C;}while(0)
 
 // PD0..PD4 - select pair 0..2 & stepper
 #define STP_SEL_PORT  PD
@@ -77,8 +76,8 @@
 
 #define ESW_PORT    PA
 #define ESW_PINS    0x06
-// PA1 - "-", PA2 - "+"
-#define ESW_PLUS    0x02
-#define ESW_MINUS   0x04
+// PA1 - "+", PA2 - "-"
+#define ESW_PLUS    0x04
+#define ESW_MINUS   0x02
 
 #endif // __PORTS_DEFINITION_H__

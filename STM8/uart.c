@@ -49,12 +49,6 @@ void uart_write(char *str){
     UART2_CR2 |= UART_CR2_TIEN; // enable TXE interrupt
 }
 
-char *omit_whitespace(char *str){
-    char c;
-    for(c = *str; c == ' ' || c == '\t' || c == '\r' || c == '\n'; c = *(++str));
-    return str;
-}
-
 void printUint(U8 *val, U8 len){
     unsigned long Number = 0;
     U8 i = len;
@@ -126,6 +120,7 @@ U8 readInt(char *buff, int *val){
     }
     do{
         rb = *buff++;
+        if(rb == '+') continue;
         if(rb < '0' || rb > '9') break;
         bad = 0;
         R = R * 10L + rb - '0';
@@ -137,6 +132,6 @@ U8 readInt(char *buff, int *val){
     //print_long(R);
     if(bad) return 0;
     if(sign) R = -R;
-    if(val) *val = (int)R;
+    *val = (int)R;
     return 1;
 }

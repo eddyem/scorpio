@@ -175,14 +175,16 @@ INTERRUPT_HANDLER(UART2_RX_IRQHandler, 21){
     U8 rb;
     if(UART2_SR & UART_SR_RXNE){ // data received
         rb = UART2_DR; // read received byte & clear RXNE flag
+        if(rb == ' ' || rb == '\t' || rb == '\r' || rb == '\n') return; // omit spaces
+        if(rb == '[') rx_idx = 0; // start of message
         //while(!(UART2_SR & UART_SR_TXE));
         UART_rx[rx_idx++] = rb; // put received byte into cycled buffer
         //UART2_DR = rb;
-        if(rx_idx == UART_BUF_LEN && rb != '\n'){ // Oops: buffer overflow! Just forget old data
+        if(rx_idx == UART_BUF_LEN && rb != ']'){ // Oops: buffer overflow! Just forget old data
             rx_idx = 0;
             return;
         }
-        if(rb == '\n'){
+        if(rb == ']'){
             uart_rdy = 1;
             UART_rx[rx_idx] = 0;
         }

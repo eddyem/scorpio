@@ -25,22 +25,19 @@
 
 volatile U8 chk_esw = 0; // need 2 check end-switches
 
-static const U8 usteps_matrix[8][8] = {
-    {0b1000, 0b1100, 0b0100, 0b0110, 0b0010, 0b0011, 0b0001, 0b1001}, // [1234]
-    {0b0010, 0b0110, 0b0100, 0b1100, 0b1000, 0b1001, 0b0001, 0b0011}, // [3214]
-    {0b1000, 0b1001, 0b0001, 0b0011, 0b0010, 0b0110, 0b0100, 0b1100}, // [1432]
-    {0b1000, 0b1010, 0b0010, 0b0110, 0b0100, 0b0101, 0b0001, 0b1001}, // [1324]
-    // inversion: cat | sed -e 's/0b/x/g' -e 's/0/y/g' -e 's/1/0/g' -e 's/y/1/g' -e s'/x/0b/g'
-    {0b0111, 0b0011, 0b1011, 0b1001, 0b1101, 0b1100, 0b1110, 0b0110}, // [1234]
-    {0b1101, 0b1001, 0b1011, 0b0011, 0b0111, 0b0110, 0b1110, 0b1100}, // [3214]
-    {0b0111, 0b0110, 0b1110, 0b1100, 0b1101, 0b1001, 0b1011, 0b0011}, // [1432]
-    {0b0111, 0b0101, 0b1101, 0b1001, 0b1011, 0b1010, 0b1110, 0b0110}, // [1324]
-};
+U8 usteps[8] = {0b1000, 0b1010, 0b0010, 0b0110, 0b0100, 0b0101, 0b0001, 0b1001};
+
+// numbers of motors in inner system:
+// MOTOR6=5, MOTOR5=4, MOTOR4=0, MOTOR3=1, MOTOR2=2, MOTOR1=3
+static motors_numbers[7] = {0,3,2,1,0,4,5};
+// array of end-switches for appropriate motor number
+// M1=e1, M2=e4, M3=e3, M4=e0, M5=e2, M6=e5
+static U8 esw_arr[7] = {0, 1, 4, 3, 0, 2, 5};
+#define ESW_SELECT(NUM) do{register U8 nsw = esw_arr[NUM]; register U8 C=PC_ODR & ~ESW_SEL_PINS; C |= ((nsw)<<5); PC_ODR = C;}while(0)
 
 volatile int Steps_left = 0;  // Number of steps
 volatile char Dir = 0;     // direction of moving: 0/1
 U16 Stepper_speed = 0;     // length of one MICROstep in us
-U8 *usteps = &usteps_matrix[0][0];
 U8 cur_motor = 7;
 /**
  * Setup pins of stepper motor (all - PP out)
@@ -88,7 +85,7 @@ U8 stepper_ch_speed(char *spd){
  * @return 0 if none pressed, 1 if "-", 2 if "+"
  */
 U8 check_endsw(){
-    // A1 - "-", A2 - "+"
+    // A1 - "+", A2 - "-"
     U8 pc = PORT(ESW_PORT, IDR);
     if(0 == (pc & ESW_MINUS)) return 1;
     if(0 == (pc & ESW_PLUS)) return 2;
@@ -100,8 +97,9 @@ U8 check_endsw(){
  * @return  1 if all OK, 0 if error occured
  */
 U8 stepper_move(U8 Nmotor, int Nsteps){
-    U8 c;
+    U8 c, nm;
     if(!Nmotor || Nmotor > 6 || !Nsteps || Steps_left) return 0;
+    nm = motors_numbers[Nmotor];
     IWDG_KR = KEY_REFRESH; // refresh watchdog
 
     if(Nsteps < 0){
@@ -115,9 +113,9 @@ U8 stepper_move(U8 Nmotor, int Nsteps){
     // turn all motors OFF
     STPRS_OFF();
     // turn on the motor we need
-    PORT(STP_SEL_PORT, ODR) |= (1 << ((Nmotor-1)/2));
-    if(Nmotor & 1) PORT(STP_SEL_PORT, ODR) &= ~GPIO_PIN3;
-    else PORT(STP_SEL_PORT, ODR) &= ~GPIO_PIN4;
+    PORT(STP_SEL_PORT, ODR) |= (1 << (nm/2));
+    if(nm & 1) PORT(STP_SEL_PORT, ODR) &= ~GPIO_PIN4;
+    else PORT(STP_SEL_PORT, ODR) &= ~GPIO_PIN3;
     c = check_endsw();
     cur_motor = Nmotor;
     if(c){
@@ -141,17 +139,6 @@ void stop_motor(){
     Steps_left = 0;
     chk_esw = 1;
     DBG("stop\n");
-}
-
-/**
- * User can change current stepper phases table
- * N - position in table from 'a' (0) to 'h' (7)
- * return 1 if all OK
- */
-U8 chk_stpr_cmd(char N){
-    if(N < 'a' || N > 'h') return 0;
-    usteps = &usteps_matrix[N-'a'][0];
-    return 1;
 }
 
 /**
