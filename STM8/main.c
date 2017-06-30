@@ -139,7 +139,6 @@ int main() {
             process_string();
         }
         if(chk_esw){
-            chk_esw = 0;
             stepper_get_esw(cur_motor);
         }
     }while(1);

@@ -48,8 +48,7 @@ U8 move_motor(char *cmd){
 
     if(steps) return stepper_move(N, steps);
     else{ // steps == 0 - just check endswitches
-        cur_motor = N;
-        chk_esw = 1;
+        prep2chkesw(N);
         return 0;
     }
 }

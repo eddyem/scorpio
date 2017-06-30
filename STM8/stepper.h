@@ -42,6 +42,7 @@ U8 stepper_move(U8 Nmotor, int Nsteps);
 
 void stop_motor();
 U8 check_endsw();
+void prep2chkesw(U8 Nmotor);
 void stepper_get_esw(U8 Nmotor);
 
 U8 chk_stpr_cmd(char N);

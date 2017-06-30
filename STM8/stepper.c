@@ -86,7 +86,14 @@ U8 stepper_ch_speed(char *spd){
  */
 U8 check_endsw(){
     // A1 - "+", A2 - "-"
+    U8 i;
     U8 pc = PORT(ESW_PORT, IDR);
+    for(i = 0; i < 255; ++i){ // wait a while for multiplexer
+        if(pc != PORT(ESW_PORT, IDR)){
+            pc = PORT(ESW_PORT, IDR);
+            i = 0;
+        }
+    }
     if(0 == (pc & ESW_MINUS)) return 1;
     if(0 == (pc & ESW_PLUS)) return 2;
     return 0;
@@ -148,13 +155,29 @@ void stop_motor(){
 void stepper_get_esw(U8 Nmotor){
     U8 sw;
     char str[] = "[2 0 St=0]\n"; // 3 - motor number, 5 - endswitch (3 if none)
-    IWDG_KR = KEY_REFRESH; // refresh watchdog
     if(Nmotor == 0 || Nmotor > 6) return; // no running motor
+    IWDG_KR = KEY_REFRESH; // refresh watchdog
     ESW_SELECT(Nmotor);
+    if(chk_esw > 1){
+        --chk_esw;
+        return;
+    }
+    chk_esw = 0;
     str[3] = Nmotor + '0';
     sw = check_endsw();
     if(sw == 0) sw = 3;
     str[8] = sw + '0';
     uart_write(str);
     cur_motor = 0;
+}
+
+/**
+ * prepare for end-switches selection:
+ * switch multiplexer and set flag
+ */
+void prep2chkesw(U8 N){
+    if(N == 0 || N > 6) return;
+    ESW_SELECT(N);
+    cur_motor = N;
+    chk_esw = 255;
 }
