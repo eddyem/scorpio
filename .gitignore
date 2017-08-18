@@ -2,3 +2,12 @@
 *.o
 *.elf
 *.lst
+*.bak
+*.bck
+*.kicad_pcb-bak
+*.dcm
+*.pho
+*.drl
+*.pdf
+*.svg
+.dropbox.attr
