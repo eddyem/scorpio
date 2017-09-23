@@ -1,4 +1,4 @@
-update=Вс 06 авг 2017 17:32:31
+update=Пн 11 сен 2017 16:44:46
 last_client=kicad
 [schematic_editor]
 version=1
@@ -12,7 +12,7 @@ SpiceUseNetNumbers=0
 LabSize=157
 [eeschema]
 version=1
-LibDir=/home/eddy/Docs/ELECTRONICS/STM8/voltmeters
+LibDir=/home/eddy/kicad/Kicad-Libraries
 [eeschema/libraries]
 LibName1=stepper-rescue
 LibName2=power
@@ -31,3 +31,4 @@ LibName14=stm8s105k4t6c
 LibName15=interface
 LibName16=switches
 LibName17=ESD_Protection
+LibName18=/home/eddy/kicad/my_elements
