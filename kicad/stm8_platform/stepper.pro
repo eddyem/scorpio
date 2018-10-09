@@ -1,4 +1,4 @@
-update=Пн 11 сен 2017 16:44:46
+update=Пн 01 окт 2018 16:08:45
 last_client=kicad
 [schematic_editor]
 version=1
