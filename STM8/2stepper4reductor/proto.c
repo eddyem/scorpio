@@ -43,8 +43,7 @@ void show_help(){
     uart_write("G - get board address\n");
     uart_write("L 0/1 - LED on/off\n");
     uart_write("P ch val - PWM on channel ch\n");
-    uart_write("T - time counter value\n");
-    uart_write("\n\n");
+    uart_write("T - time counter value\n\n");
 }
 
 static void set_PWM(char *cmd, char **buff){

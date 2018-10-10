@@ -1,0 +1,70 @@
+Rotation direction as seems from back side of motor!
+
+Command protocol: [ addr command data ]
+         broadcast addr: b
+commands:
+0/1 - command for given motor:
+        E - get end-switches
+        L - move CCW
+        M - get motor state (RELAX, INFMV+/-, STOP, MVSTP+/-, OFFSW+/-, UNDEF)
+        N - go for N st./get rest
+        O - pull off the switch
+        P - get current position
+        R - move CW
+        S - get/set speed
+        X - stop motor
+        Z - stop and zero position
+r - reset MCU
+G - get board address
+L 0/1 - LED on/off
+P ch val - PWM on channel ch
+T - time counter value
+
+examples:
+[00E] -> [ 0 0 E 0 ]   (no esw)
+[01E] -> [ 0 1 E 3 ]   (both - bad situation)
+[00L] -> [ 0 0 L  ]    (all OK)
+[01L] -> [ 0 1 L E 1 ] (on left endswitch)
+[00R] -> [ 0 0 R E 2 ] (on right endswitch)
+[01R][01M] -> [ 0 1 M INFMV+ ]
+[01N400] -> [ 0 1 N 400 ] (start moving)
+[01N] -> [ 0 1 N 46 ] (steps left)
+[00N-300] -> [ 0 0 N err ] (on endswitch)
+[00O-100] -> [ 0 0 O err ] (on left endswitch)
+[00O100] -> [ 0 0 O 100 ] (on rigth endswitch or out of them)
+[01P] -> [ 0 1 P 1903 ] (current position in full steps)
+[00S] -> [ 0 0 S 2500 ] (get speed value)
+[01S1500] -> [ 0 1 S 1500 ] (set speed value)
+[01X] -> [ 0 1 X ]
+[01Z] -> [ 0 1 Z ]
+
+[0r] ->
+
+Hello! My address is 0
+
+
+Command protocol: [ addr command data ]
+         broadcast addr: b
+commands:
+0/1 - command for given motor:
+        E - get end-switches
+        L - move CCW
+        M - get motor state
+        N - go for N st./get rest
+        O - pull off the switch
+        P - get current position
+        R - move CW
+        S - get/set speed
+        X - stop motor
+        Z - stop and zero position
+r - reset MCU
+G - get board address
+L 0/1 - LED on/off
+P ch val - PWM on channel ch
+T - time counter value
+
+
+[0G] -> [ 0 G 0 ]
+[0L] -> [ 0 L 0 ], [0L1] -> [ 0 L 1 ], [0L] -> [ 0 L 1 ]
+[0P] -> [ 0 P 0 0 ], [0P0100] -> [ 0 P 0 100 ], [0P0] -> [ 0 P 0 100 ], [0P510] -> [ 0 P -1 ], [0P0500] -> [ 0 P 0 -1 ]
+[0T] -> [ 0 T 191593 ]

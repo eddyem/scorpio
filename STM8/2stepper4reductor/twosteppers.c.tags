@@ -1,4 +1,5 @@
 # format=tagmanager
+ACCEL_USTEPSÌ65536Ö0
 ADC_AWCRHÌ65536Ö0
 ADC_AWCRLÌ65536Ö0
 ADC_AWSRHÌ65536Ö0
@@ -39,7 +40,10 @@ ADDR_MASKÌ65536Ö0
 AWU_APRÌ65536Ö0
 AWU_CSR1Ì65536Ö0
 AWU_TBRÌ65536Ö0
+AccelerationÌ16384Ö0ÏU16
 BEEP_CSRÌ65536Ö0
+BROADCAST_ADDRÌ65536Ö0
+BROADCAST_CHARÌ65536Ö0
 CCRÌ65536Ö0
 CFG_GCRÌ65536Ö0
 CHK_M0E1Ì131072Í()Ö0
@@ -59,6 +63,12 @@ CLK_SWCRÌ65536Ö0
 CLK_SWIMCCRÌ65536Ö0
 CLK_SWRÌ65536Ö0
 CONCATÌ131072Í(a,b)Ö0
+Current_posÌ16384Ö0Ïlong
+DEFAULT_USTEP_PERIODÌ65536Ö0
+DIR_CCWÌ4Îanon_enum_1Ö0
+DIR_CWÌ4Îanon_enum_1Ö0
+DIR_STOPÌ4Îanon_enum_1Ö0
+DirÌ16384Ö0Ïvolatile motor_direction
 EEPROM_KEY1Ì65536Ö0
 EEPROM_KEY2Ì65536Ö0
 EEPROM_START_ADDRÌ65536Ö0
@@ -82,6 +92,7 @@ GPIO_PIN4Ì65536Ö0
 GPIO_PIN5Ì65536Ö0
 GPIO_PIN6Ì65536Ö0
 GPIO_PIN7Ì65536Ö0
+Global_timeÌ16384Ö0Ïvolatile unsigned long
 Global_timeÌ32768Ö0Ïvolatile unsigned long
 I2C_CCRHÌ65536Ö0
 I2C_CCRLÌ65536Ö0
@@ -126,7 +137,16 @@ M1E1_PINÌ65536Ö0
 M1E1_PORTÌ65536Ö0
 M1E2_PINÌ65536Ö0
 M1E2_PORTÌ65536Ö0
+MAX_USTEP_PERIODÌ65536Ö0
+MCU_noÌ16384Ö0ÏU8
 MCU_noÌ32768Ö0ÏU8
+MIN_USTEP_PERIODÌ65536Ö0
+MOTOR_INFMOVEÌ4Îanon_enum_0Ö0
+MOTOR_MOVENSTEPSÌ4Îanon_enum_0Ö0
+MOTOR_OFFSWITCHÌ4Îanon_enum_0Ö0
+MOTOR_RELAXÌ4Îanon_enum_0Ö0
+MOTOR_STOPÌ4Îanon_enum_0Ö0
+MOTOR_ZEROSTOPÌ4Îanon_enum_0Ö0
 NULLÌ65536Ö0
 PA_CR1Ì65536Ö0
 PA_CR2Ì65536Ö0
@@ -159,6 +179,7 @@ PF_DDRÌ65536Ö0
 PF_IDRÌ65536Ö0
 PF_ODRÌ65536Ö0
 PORTÌ131072Í(a,b)Ö0
+PULLOFFTHESW_STEPSÌ65536Ö0
 PWM_PINSÌ65536Ö0
 RST_SRÌ65536Ö0
 SPI_CR1Ì65536Ö0
@@ -197,6 +218,9 @@ STP0_PORTÌ65536Ö0
 STP1_PORTÌ65536Ö0
 STP_PINSÌ65536Ö0
 SWIM_CSRÌ65536Ö0
+Stepper_speedÌ16384Ö0ÏU16
+Steps_leftÌ16384Ö0Ïlong
+Steps_left_at_eswÌ16384Ö0Ïlong
 TIM1_ARRHÌ65536Ö0
 TIM1_ARRLÌ65536Ö0
 TIM1_BKRÌ65536Ö0
@@ -300,8 +324,11 @@ UART_SR_RXNEÌ65536Ö0
 UART_SR_TCÌ65536Ö0
 UART_SR_TXEÌ65536Ö0
 UART_TX_PINÌ65536Ö0
+UART_rxÌ16384Ö0ÏU8
 UART_rxÌ32768Ö0ÏU8
+UART_txÌ16384Ö0ÏU8
 UART_txÌ32768Ö0ÏU8
+UstepÌ16384Ö0ÏU8
 WWDG_CRÌ65536Ö0
 WWDG_WRÌ65536Ö0
 _FORTIFY_SOURCEÌ65536Ö0
@@ -464,6 +491,7 @@ __LONG_LONG_MAX__Ì65536Ö0
 __LONG_MAX__Ì65536Ö0
 __LP64__Ì65536Ö0
 __MMX__Ì65536Ö0
+__MOTORS_H__Ì65536Ö0
 __NO_INLINE__Ì65536Ö0
 __ORDER_BIG_ENDIAN__Ì65536Ö0
 __ORDER_LITTLE_ENDIAN__Ì65536Ö0
@@ -471,6 +499,7 @@ __ORDER_PDP_ENDIAN__Ì65536Ö0
 __PIC__Ì65536Ö0
 __PIE__Ì65536Ö0
 __PRAGMA_REDEFINE_EXTNAMEÌ65536Ö0
+__PROTO_H__Ì65536Ö0
 __PTRDIFF_MAX__Ì65536Ö0
 __PTRDIFF_TYPE__Ì65536Ö0
 __REGISTER_PREFIX__Ì65536Ö0
@@ -603,27 +632,68 @@ __unixÌ65536Ö0
 __unix__Ì65536Ö0
 __x86_64Ì65536Ö0
 __x86_64__Ì65536Ö0
+anon_enum_0Ì2Ö0
+anon_enum_1Ì2Ö0
+check_endswÌ16Í(U8 motor)Ö0ÏU8
 disableInterruptsÌ131072Í()Ö0
 enableInterruptsÌ131072Í()Ö0
+get_motor_stateÌ16Í(U8 nmotor, char **buff)Ö0Ïvoid
 haltÌ131072Í()Ö0
+hw_initÌ16Í()Ö0Ïvoid
 hw_initÌ1024Í()Ö0Ïvoid
+ibufÌ16384Ö0Ïchar
 iretÌ131072Í()Ö0
 linuxÌ65536Ö0
+long2bufÌ16Í(long Number, char **buf)Ö0Ïvoid
 long2bufÌ1024Í(long Number, char **buf)Ö0Ïvoid
+motor_commandÌ16Í(const char *cmd, char **buff)Ö0Ïvoid
+motor_commandÌ1024Í(const char *cmd, char **bufptr)Ö0Ïvoid
+motor_directionÌ4096Ö0Ïanon_enum_1
+motor_stateÌ4096Ö0Ïanon_enum_0
+motors_initÌ16Í()Ö0Ïvoid
+motors_initÌ1024Í()Ö0Ïvoid
+moveNstepsÌ16Í(U8 motorNum, long nsteps)Ö0Ïint
 nopÌ131072Í()Ö0
+obufÌ16384Ö0Ïchar
 omit_whitespaceÌ1024Í(char *str)Ö0Ïchar *
 pop_ccrÌ131072Í()Ö0
+printUintÌ16Í(const U8 *val, U8 len)Ö0Ïvoid
 printUintÌ1024Í(const U8 *val, U8 len)Ö0Ïvoid
+process_commandsÌ16Í(char *cmd)Ö0ÏU8
+process_stepperÌ16Í(U8 motor_num)Ö0Ïvoid
+process_stepperÌ1024Í(unsigned char stepno)Ö0Ïvoid
+process_stringÌ16Í()Ö0Ïvoid
+process_stringÌ1024Í()Ö0Ïvoid
+pullofftheswitchÌ16Í(U8 motorNum, long nsteps)Ö0Ïint
 push_ccrÌ131072Í()Ö0
+readLongÌ16Í(const char *buff, long *val)Ö0ÏU8
 readLongÌ1024Í(const char *buff, long *val)Ö0ÏU8
 rimÌ131072Í()Ö0
+rx_idxÌ16384Ö0ÏU8
 rx_idxÌ32768Ö0ÏU8
+set_PWMÌ16Í(char *cmd, char **buff)Ö0Ïvoid
+show_helpÌ16Í()Ö0Ïvoid
+show_helpÌ1024Í()Ö0Ïvoid
+show_motors_helpÌ16Í()Ö0Ïvoid
+show_motors_helpÌ1024Í()Ö0Ïvoid
 simÌ131072Í()Ö0
+stateÌ16384Ö0Ïvolatile motor_state
+stepper_interruptÌ16Í(U8 motor_num)Ö0Ïvoid
+stepper_interruptÌ1024Í(unsigned char motor_num)Ö0Ïvoid
+stop_motorÌ16Í(U8 motorNum)Ö0Ïvoid
+strtobufÌ16Í(const char *str, char **buff)Ö0Ïvoid
 trapÌ131072Í()Ö0
+turnontimerÌ16Í(U8 motorNum)Ö0Ïvoid
+tx_idxÌ16384Ö0ÏU8
 tx_idxÌ32768Ö0ÏU8
+tx_lenÌ16384Ö0ÏU8
 tx_lenÌ32768Ö0ÏU8
+uart_initÌ16Í()Ö0Ïvoid
 uart_initÌ1024Í()Ö0Ïvoid
+uart_rdyÌ16384Ö0ÏU8
 uart_rdyÌ32768Ö0ÏU8
+uart_writeÌ16Í(const char *str)Ö0Ïvoid
 uart_writeÌ1024Í(const char *str)Ö0Ïvoid
 unixÌ65536Ö0
+ustepsÌ16384Ö0Ïconst U8
 wfiÌ131072Í()Ö0

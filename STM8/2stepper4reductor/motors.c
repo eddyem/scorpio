@@ -122,7 +122,6 @@ static void stop_motor(U8 motorNum){
         default: return;
     }
     Steps_left[motorNum] = 0;
-    Ustep[motorNum] = 0;
     Dir[motorNum] = DIR_STOP;
 }
 
@@ -161,13 +160,21 @@ static void get_motor_state(U8 nmotor, char **buff){
 
 // turn on motor's timer starting from the lowest speed
 static void turnontimer(U8 motorNum){
+    U8 tmp;
     switch(motorNum){
         case 0:
+            // turn on power
+            tmp = PORT(STP0_PORT, ODR) & ~STP_PINS;
+            PORT(STP0_PORT, ODR) = tmp | usteps[Ustep[0]];
+            // start from the slowest speed
             TIM2_ARRH = MAX_USTEP_PERIOD >> 8;
             TIM2_ARRL = MAX_USTEP_PERIOD & 0xff;
+            // run timer
             TIM2_CR1 |= TIM_CR1_CEN;
         break;
         case 1:
+            tmp = PORT(STP1_PORT, ODR) & ~STP_PINS;
+            PORT(STP1_PORT, ODR) = tmp | usteps[Ustep[1]];
             TIM3_ARRH = MAX_USTEP_PERIOD >> 8;
             TIM3_ARRL = MAX_USTEP_PERIOD & 0xff;
             TIM3_CR1 |= TIM_CR1_CEN;
@@ -189,7 +196,6 @@ static int moveNsteps(U8 motorNum, long nsteps){
         if(sw) return 0; // on zero end-switch: no moving backward, on positive - no moving at all!
         Dir[motorNum] = DIR_CCW;
         nsteps = -nsteps;
-        Ustep[motorNum] = 7;
         state[motorNum] = MOTOR_MOVENSTEPS;
     }else{
         if(sw & 2) return 0; // for positive direction no moving to any side when on end-switch 2!
@@ -216,7 +222,6 @@ static int pullofftheswitch(U8 motorNum, long nsteps){
         if(sw & 1) return 0; // on zero end-switch: no moving backward
         Dir[motorNum] = DIR_CCW;
         nsteps = -nsteps;
-        Ustep[motorNum] = 7;
     }else{
         Dir[motorNum] = DIR_CW;
     }
@@ -236,26 +241,27 @@ void motor_command(const char *cmd, char **buff){
     *((*buff)++) = '0' + motorNum;
     *((*buff)++) = ' ';
     c = *cmd++;
-    *((*buff)++) = c; *((*buff)++) = ' ';
+    *((*buff)++) = c;
     switch(c){
         case 'E': // check endswitches state
+             *((*buff)++) = ' ';
             *((*buff)++) = '0' + check_endsw(motorNum);
         break;
         case 'L': // infinite move left
-            if(1 == check_endsw(motorNum)){
-                *((*buff)++) = 'E'; *((*buff)++) = ' ';
-                *((*buff)++) = '1';
+            if(check_endsw(motorNum) & 1){
+                strtobuf(" E 1", buff);
             }else{
                 state[motorNum] = MOTOR_INFMOVE;
                 Dir[motorNum] = DIR_CCW;
-                Ustep[motorNum] = 7;
                 turnontimer(motorNum);
             }
         break;
         case 'M': // get motor state
+             *((*buff)++) = ' ';
             get_motor_state(motorNum, buff);
         break;
         case 'N': // go for N steps or get steps left
+            *((*buff)++) = ' ';
             if(!readLong(cmd, &l)){ // get
                 long2buf(Steps_left[motorNum], buff);
             }else{
@@ -264,6 +270,7 @@ void motor_command(const char *cmd, char **buff){
             }
         break;
         case 'O': // pull off the switch (if no steps given, go for PULLOFFTHESW_STEPS)
+             *((*buff)++) = ' ';
             if(!readLong(cmd, &l)){ // get
                 l = PULLOFFTHESW_STEPS;
             }
@@ -271,12 +278,12 @@ void motor_command(const char *cmd, char **buff){
             else long2buf(l, buff);
         break;
         case 'P': // get current position
+            *((*buff)++) = ' ';
             long2buf(Current_pos[motorNum], buff);
         break;
         case 'R': // infinite move right
-            if(2 == check_endsw(motorNum)){
-                *((*buff)++) = 'E'; *((*buff)++) = ' ';
-                *((*buff)++) = '2';
+            if(check_endsw(motorNum) & 2){
+                strtobuf(" E 2", buff);
             }else{
                 state[motorNum] = MOTOR_INFMOVE;
                 Dir[motorNum] = DIR_CW;
@@ -284,6 +291,7 @@ void motor_command(const char *cmd, char **buff){
             }
         break;
         case 'S': // change speed
+             *((*buff)++) = ' ';
             if(!readLong(cmd, &l) || l < MIN_USTEP_PERIOD || l > MAX_USTEP_PERIOD){ // get speed
                 if(motorNum == 0) spd = TIM2_ARRH << 8 | TIM2_ARRL;
                 else spd = TIM3_ARRH << 8 | TIM3_ARRL;
@@ -358,26 +366,20 @@ void stepper_interrupt(U8 motor_num){
         break;
         default: return;
     }
-    if(Dir[motor_num] == DIR_CCW){ // counter-clockwise
-        if(Ustep[motor_num] == 0){
-            --Steps_left[motor_num];
-            --Current_pos[motor_num];
-            if(state[motor_num] == MOTOR_STOP || state[motor_num] == MOTOR_ZEROSTOP){
-                stop_motor(motor_num);
-                return;
-            }
-            Ustep[motor_num] = 7;
-        }else --Ustep[motor_num];
-    }else{ // clockwise
-        if(++Ustep[motor_num] > 7){
-            --Steps_left[motor_num];
-            ++Current_pos[motor_num];
-            if(state[motor_num] == MOTOR_STOP || state[motor_num] == MOTOR_ZEROSTOP){
-                stop_motor(motor_num);
-                return;
-            }
-            Ustep[motor_num] = 0;
+    if(Ustep[motor_num] % 2 == 0){ // full amount of half-steps - increment step counters & check for stop
+        --Steps_left[motor_num];
+        if(Dir[motor_num] == DIR_CCW) --Current_pos[motor_num];
+        else ++Current_pos[motor_num];
+        if(state[motor_num] == MOTOR_STOP || state[motor_num] == MOTOR_ZEROSTOP){
+            stop_motor(motor_num);
+            return;
         }
+    }
+    if(Dir[motor_num] == DIR_CCW){ // counter-clockwise
+        if(Ustep[motor_num] == 0) Ustep[motor_num] = 7;
+        else --Ustep[motor_num];
+    }else{ // clockwise
+        if(++Ustep[motor_num] > 7) Ustep[motor_num] = 0;
     }
 }
 

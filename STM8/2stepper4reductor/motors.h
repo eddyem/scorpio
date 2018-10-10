@@ -24,17 +24,17 @@
 #ifndef __MOTORS_H__
 #define __MOTORS_H__
 
-// default speed @ start - 50 steps per second
+// default speed @ start - 200 steps per second
 #define DEFAULT_USTEP_PERIOD    (2500)
-// max speed == 1/(625us*8) = 200 steps per second
-#define MIN_USTEP_PERIOD        (625)
-// min speed as 16-bit timer can - 65535 - near 1.9 steps per second
-// default min speed - 10 steps per second
-#define MAX_USTEP_PERIOD        (12500)
+// max speed == 1/(800us*2) = 625 steps per second
+#define MIN_USTEP_PERIOD        (800)
+// min speed as 16-bit timer can - 65535 - near 7.6 steps per second
+// default min speed - 25 steps per second
+#define MAX_USTEP_PERIOD        (20000)
 // amount of steps to pull off the switch
 #define PULLOFFTHESW_STEPS      (100)
-// amount of microsteps for acceleration calculation
-#define ACCEL_USTEPS             (200)
+// amount of microsteps for acceleration calculation (50 full steps)
+#define ACCEL_USTEPS             (100)
 
 //extern unsigned char irq_flag;
 
