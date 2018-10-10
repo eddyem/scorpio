@@ -1,6 +1,24 @@
-EESchema Schematic File Version 4
+EESchema Schematic File Version 2
+LIBS:stepper-rescue
+LIBS:power
+LIBS:device
+LIBS:transistors
+LIBS:conn
+LIBS:linear
+LIBS:regul
+LIBS:cmos4000
+LIBS:adc-dac
+LIBS:memory
+LIBS:microcontrollers
+LIBS:dsp
+LIBS:contrib
+LIBS:stm8s105k4t6c
+LIBS:interface
+LIBS:switches
+LIBS:ESD_Protection
+LIBS:my_elements
 LIBS:stepper-cache
-EELAYER 26 0
+EELAYER 25 0
 EELAYER END
 $Descr A4 11693 8268
 encoding utf-8
@@ -15,7 +33,7 @@ Comment3 ""
 Comment4 ""
 $EndDescr
 $Comp
-L stm8s105k4t6c:STM8S105K4T6C U1
+L STM8S105K4T6C U1
 U 1 1 52FB03A2
 P 3150 1850
 F 0 "U1" H 3150 2900 60  0000 C CNN
@@ -26,7 +44,7 @@ F 3 "~" H 3150 1850 60  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L stepper-rescue:GND-RESCUE-stepper #PWR01
+L GND-RESCUE-stepper #PWR01
 U 1 1 52FB03EF
 P 1500 1950
 F 0 "#PWR01" H 1500 1950 30  0001 C CNN
@@ -37,7 +55,7 @@ F 3 "" H 1500 1950 60  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L stepper-rescue:GND-RESCUE-stepper #PWR02
+L GND-RESCUE-stepper #PWR02
 U 1 1 52FB0400
 P 1500 1350
 F 0 "#PWR02" H 1500 1350 30  0001 C CNN
@@ -48,7 +66,7 @@ F 3 "" H 1500 1350 60  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L stepper-rescue:C-RESCUE-stepper C1
+L C-RESCUE-stepper C1
 U 1 1 52FB0413
 P 1000 1450
 F 0 "C1" H 1050 1550 50  0000 L CNN
@@ -59,7 +77,7 @@ F 3 "" H 1000 1450 60  0000 C CNN
 	0    -1   -1   0   
 $EndComp
 $Comp
-L stepper-rescue:C-RESCUE-stepper C2
+L C-RESCUE-stepper C2
 U 1 1 52FB0426
 P 1000 1700
 F 0 "C2" H 1050 1800 50  0000 L CNN
@@ -70,7 +88,7 @@ F 3 "" H 1000 1700 60  0000 C CNN
 	0    -1   -1   0   
 $EndComp
 $Comp
-L stepper-rescue:GND-RESCUE-stepper #PWR03
+L GND-RESCUE-stepper #PWR03
 U 1 1 52FB0453
 P 800 1850
 F 0 "#PWR03" H 800 1850 30  0001 C CNN
@@ -137,7 +155,7 @@ SWIM/PD1
 Text Label 9850 1000 2    60   ~ 0
 NRST
 $Comp
-L stepper-rescue:LED-RESCUE-stepper D1
+L LED-RESCUE-stepper D1
 U 1 1 52FB0DD3
 P 2200 3650
 F 0 "D1" H 2200 3750 50  0000 C CNN
@@ -148,7 +166,7 @@ F 3 "" H 2200 3650 60  0000 C CNN
 	-1   0    0    1   
 $EndComp
 $Comp
-L stepper-rescue:R-RESCUE-stepper R2
+L R-RESCUE-stepper R2
 U 1 1 52FB0DE2
 P 1700 3650
 F 0 "R2" V 1780 3650 50  0000 C CNN
@@ -161,7 +179,7 @@ $EndComp
 Text Label 1350 3650 2    60   ~ 0
 PC4
 $Comp
-L stepper-rescue:R-RESCUE-stepper R12
+L R-RESCUE-stepper R12
 U 1 1 52FB0EFD
 P 9500 1150
 F 0 "R12" V 9580 1150 50  0000 C CNN
@@ -172,7 +190,7 @@ F 3 "" H 9500 1150 60  0000 C CNN
 	0    1    1    0   
 $EndComp
 $Comp
-L stepper-rescue:GND-RESCUE-stepper #PWR04
+L GND-RESCUE-stepper #PWR04
 U 1 1 52FB0F03
 P 9850 1650
 F 0 "#PWR04" H 9850 1650 30  0001 C CNN
@@ -183,7 +201,7 @@ F 3 "" H 9850 1650 60  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L stepper-rescue:C-RESCUE-stepper C5
+L C-RESCUE-stepper C5
 U 1 1 52FB0F99
 P 9850 1350
 F 0 "C5" H 9900 1450 50  0000 L CNN
@@ -194,7 +212,7 @@ F 3 "" H 9850 1350 60  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L stepper-rescue:GND-RESCUE-stepper #PWR05
+L GND-RESCUE-stepper #PWR05
 U 1 1 52FB287C
 P 10150 1400
 F 0 "#PWR05" H 10150 1400 30  0001 C CNN
@@ -205,7 +223,7 @@ F 3 "" H 10150 1400 60  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L stepper-rescue:CONN_01X04 P1
+L CONN_01X04 P1
 U 1 1 52FB4AA7
 P 9450 2550
 F 0 "P1" H 9450 2300 50  0000 C CNN
@@ -222,7 +240,7 @@ RXD
 Text Label 9650 2600 0    61   ~ 0
 TXD
 $Comp
-L stepper-rescue:GND-RESCUE-stepper #PWR06
+L GND-RESCUE-stepper #PWR06
 U 1 1 52FB4CEF
 P 10650 2500
 F 0 "#PWR06" H 10650 2500 30  0001 C CNN
@@ -237,7 +255,7 @@ PD5
 Text Label 9900 2600 0    61   ~ 0
 PD6
 $Comp
-L stepper-rescue:ULN2803A U2
+L ULN2803A U2
 U 1 1 5983208A
 P 6550 1450
 F 0 "U2" H 6550 1975 50  0000 C CNN
@@ -248,7 +266,7 @@ F 3 "" H 6650 1350 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L stepper-rescue:SW_DIP_x03-RESCUE-stepper SW1
+L SW_DIP_x03-RESCUE-stepper SW1
 U 1 1 59834FF2
 P 9750 3950
 F 0 "SW1" H 9750 4300 50  0000 C CNN
@@ -259,7 +277,7 @@ F 3 "" H 9750 3950 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L stepper-rescue:R-RESCUE-stepper R3
+L R-RESCUE-stepper R3
 U 1 1 59836A36
 P 1700 5650
 F 0 "R3" V 1780 5650 50  0000 C CNN
@@ -270,7 +288,7 @@ F 3 "" H 1700 5650 60  0000 C CNN
 	0    1    1    0   
 $EndComp
 $Comp
-L stepper-rescue:SP0504BAHT D2
+L SP0504BAHT D2
 U 1 1 59840D28
 P 8800 2600
 F 0 "D2" V 9150 2550 50  0000 L CNN
@@ -281,7 +299,7 @@ F 3 "" H 8925 2725 50  0001 C CNN
 	0    -1   -1   0   
 $EndComp
 $Comp
-L stepper-rescue:+5V #PWR07
+L +5V #PWR07
 U 1 1 5984240F
 P 9250 1050
 F 0 "#PWR07" H 9250 900 50  0001 C CNN
@@ -292,7 +310,7 @@ F 3 "" H 9250 1050 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L stepper-rescue:+5V #PWR08
+L +5V #PWR08
 U 1 1 598424AD
 P 1350 1750
 F 0 "#PWR08" H 1350 1600 50  0001 C CNN
@@ -303,7 +321,7 @@ F 3 "" H 1350 1750 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L stepper-rescue:+5V #PWR09
+L +5V #PWR09
 U 1 1 59842925
 P 2500 3650
 F 0 "#PWR09" H 2500 3500 50  0001 C CNN
@@ -314,7 +332,7 @@ F 3 "" H 2500 3650 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L stepper-rescue:R-RESCUE-stepper R1
+L R-RESCUE-stepper R1
 U 1 1 5984439B
 P 1350 5400
 F 0 "R1" V 1430 5400 50  0000 C CNN
@@ -325,7 +343,7 @@ F 3 "" H 1350 5400 60  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L stepper-rescue:R-RESCUE-stepper R14
+L R-RESCUE-stepper R14
 U 1 1 5984483E
 P 10300 3400
 F 0 "R14" V 10380 3400 50  0000 C CNN
@@ -336,7 +354,7 @@ F 3 "" H 10300 3400 60  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L stepper-rescue:R-RESCUE-stepper R15
+L R-RESCUE-stepper R15
 U 1 1 5984495E
 P 10500 3400
 F 0 "R15" V 10580 3400 50  0000 C CNN
@@ -347,7 +365,7 @@ F 3 "" H 10500 3400 60  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L stepper-rescue:R-RESCUE-stepper R13
+L R-RESCUE-stepper R13
 U 1 1 598449A9
 P 10100 3400
 F 0 "R13" V 10180 3400 50  0000 C CNN
@@ -358,7 +376,7 @@ F 3 "" H 10100 3400 60  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L stepper-rescue:+5V #PWR010
+L +5V #PWR010
 U 1 1 59844ACD
 P 9400 3650
 F 0 "#PWR010" H 9400 3500 50  0001 C CNN
@@ -369,7 +387,7 @@ F 3 "" H 9400 3650 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L stepper-rescue:GND-RESCUE-stepper #PWR011
+L GND-RESCUE-stepper #PWR011
 U 1 1 598456D9
 P 10700 3200
 F 0 "#PWR011" H 10700 3200 30  0001 C CNN
@@ -396,7 +414,7 @@ Text Notes 9450 3950 0    60   ~ 0
 Text Notes 1550 3400 0    60   ~ 0
 On-board LED
 $Comp
-L stepper-rescue:+5V #PWR012
+L +5V #PWR012
 U 1 1 59847EEF
 P 1350 5100
 F 0 "#PWR012" H 1350 4950 50  0001 C CNN
@@ -407,7 +425,7 @@ F 3 "" H 1350 5100 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L stepper-rescue:+5V #PWR013
+L +5V #PWR013
 U 1 1 59848624
 P 2350 5350
 F 0 "#PWR013" H 2350 5200 50  0001 C CNN
@@ -428,7 +446,7 @@ SWIM
 Text Label 9650 2700 0    61   ~ 0
 5.0V
 $Comp
-L stepper-rescue:+5V #PWR014
+L +5V #PWR014
 U 1 1 598515D1
 P 10250 2700
 F 0 "#PWR014" H 10250 2550 50  0001 C CNN
@@ -439,7 +457,7 @@ F 3 "" H 10250 2700 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L stepper-rescue:LD1117S50CTR-RESCUE-stepper U3
+L LD1117S50CTR-RESCUE-stepper U3
 U 1 1 598520BA
 P 8200 1200
 F 0 "U3" H 8200 1500 50  0000 C CNN
@@ -450,7 +468,7 @@ F 3 "" H 8200 1200 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L stepper-rescue:C-RESCUE-stepper C3
+L C-RESCUE-stepper C3
 U 1 1 59852CFD
 P 7750 1350
 F 0 "C3" H 7800 1450 50  0000 L CNN
@@ -461,7 +479,7 @@ F 3 "" H 7750 1350 60  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L stepper-rescue:CP C4
+L CP C4
 U 1 1 59852E21
 P 8600 1400
 F 0 "C4" H 8625 1500 50  0000 L CNN
@@ -472,7 +490,7 @@ F 3 "" H 8600 1400 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L stepper-rescue:GND-RESCUE-stepper #PWR015
+L GND-RESCUE-stepper #PWR015
 U 1 1 598534FD
 P 8200 1600
 F 0 "#PWR015" H 8200 1600 30  0001 C CNN
@@ -483,7 +501,7 @@ F 3 "" H 8200 1600 60  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L stepper-rescue:+5V #PWR016
+L +5V #PWR016
 U 1 1 59853D62
 P 8800 1100
 F 0 "#PWR016" H 8800 950 50  0001 C CNN
@@ -494,7 +512,7 @@ F 3 "" H 8800 1100 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L stepper-rescue:+12V #PWR017
+L +12V #PWR017
 U 1 1 59854294
 P 7650 1100
 F 0 "#PWR017" H 7650 950 50  0001 C CNN
@@ -509,7 +527,7 @@ Power
 Text Notes 9800 2200 0    60   ~ 0
 ext USART
 $Comp
-L stepper-rescue:GND-RESCUE-stepper #PWR018
+L GND-RESCUE-stepper #PWR018
 U 1 1 598572C2
 P 9000 2650
 F 0 "#PWR018" H 9000 2650 30  0001 C CNN
@@ -520,7 +538,7 @@ F 3 "" H 9000 2650 60  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L stepper-rescue:GND-RESCUE-stepper #PWR019
+L GND-RESCUE-stepper #PWR019
 U 1 1 59857BB1
 P 6550 2200
 F 0 "#PWR019" H 6550 2200 30  0001 C CNN
@@ -531,7 +549,7 @@ F 3 "" H 6550 2200 60  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L stepper-rescue:+12V #PWR020
+L +12V #PWR020
 U 1 1 59858729
 P 7050 2050
 F 0 "#PWR020" H 7050 1900 50  0001 C CNN
@@ -570,7 +588,7 @@ Stepper interface
 Text Notes 8050 2150 0    60   ~ 0
 ESW protection
 $Comp
-L stepper-rescue:R-RESCUE-stepper R8
+L R-RESCUE-stepper R8
 U 1 1 5985D588
 P 7900 2250
 F 0 "R8" V 7980 2250 50  0000 C CNN
@@ -581,7 +599,7 @@ F 3 "" H 7900 2250 60  0000 C CNN
 	0    1    1    0   
 $EndComp
 $Comp
-L stepper-rescue:R-RESCUE-stepper R11
+L R-RESCUE-stepper R11
 U 1 1 5985DA29
 P 7900 2850
 F 0 "R11" V 7980 2850 50  0000 C CNN
@@ -592,7 +610,7 @@ F 3 "" H 7900 2850 60  0000 C CNN
 	0    1    1    0   
 $EndComp
 $Comp
-L stepper-rescue:R-RESCUE-stepper R9
+L R-RESCUE-stepper R9
 U 1 1 5985DB8B
 P 7900 2450
 F 0 "R9" V 7980 2450 50  0000 C CNN
@@ -603,7 +621,7 @@ F 3 "" H 7900 2450 60  0000 C CNN
 	0    1    1    0   
 $EndComp
 $Comp
-L stepper-rescue:R-RESCUE-stepper R10
+L R-RESCUE-stepper R10
 U 1 1 5985DB91
 P 7900 2650
 F 0 "R10" V 7980 2650 50  0000 C CNN
@@ -654,7 +672,7 @@ M2E1
 Text Label 9100 5300 0    60   ~ 0
 M2E2
 $Comp
-L stepper-rescue:+12V #PWR021
+L +12V #PWR021
 U 1 1 59864EE6
 P 8200 5500
 F 0 "#PWR021" H 8200 5350 50  0001 C CNN
@@ -665,7 +683,7 @@ F 3 "" H 8200 5500 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L stepper-rescue:PWR_FLAG #FLG022
+L PWR_FLAG #FLG022
 U 1 1 598652F0
 P 8100 5500
 F 0 "#FLG022" H 8100 5575 50  0001 C CNN
@@ -676,7 +694,7 @@ F 3 "" H 8100 5500 50  0001 C CNN
 	-1   0    0    1   
 $EndComp
 $Comp
-L stepper-rescue:GND-RESCUE-stepper #PWR023
+L GND-RESCUE-stepper #PWR023
 U 1 1 598655A5
 P 8050 4650
 F 0 "#PWR023" H 8050 4650 30  0001 C CNN
@@ -687,7 +705,7 @@ F 3 "" H 8050 4650 60  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L stepper-rescue:PWR_FLAG #FLG024
+L PWR_FLAG #FLG024
 U 1 1 5986564B
 P 8200 4600
 F 0 "#FLG024" H 8200 4675 50  0001 C CNN
@@ -722,7 +740,10 @@ Wire Wire Line
 Wire Wire Line
 	1200 1700 1200 1600
 Wire Wire Line
-	1200 1600 1500 1600
+	1200 1600 1750 1600
+Wire Wire Line
+	800  1450 800  1850
+Connection ~ 800  1550
 Connection ~ 800  1700
 Wire Wire Line
 	2500 3650 2400 3650
@@ -731,7 +752,7 @@ Wire Wire Line
 Wire Wire Line
 	1450 3650 1350 3650
 Wire Wire Line
-	1350 1800 1500 1800
+	1350 1800 1750 1800
 Wire Wire Line
 	1500 1800 1500 1600
 Connection ~ 1500 1600
@@ -743,18 +764,18 @@ Wire Wire Line
 Wire Wire Line
 	10650 2400 10650 2500
 Wire Wire Line
-	10100 3150 10300 3150
+	10100 3150 10700 3150
 Connection ~ 10300 3150
 Wire Wire Line
 	10300 3850 10300 3650
 Wire Wire Line
 	10100 3650 10100 3950
 Wire Wire Line
-	10050 3950 10100 3950
+	10050 3950 10550 3950
 Wire Wire Line
-	10050 3850 10300 3850
+	10050 3850 10550 3850
 Wire Wire Line
-	10050 3750 10500 3750
+	10050 3750 10550 3750
 Wire Wire Line
 	10500 3750 10500 3650
 Connection ~ 10500 3750
@@ -772,11 +793,11 @@ Wire Wire Line
 Connection ~ 10500 3150
 Connection ~ 9400 3750
 Wire Wire Line
-	9400 3950 9400 3850
+	9400 3950 9400 3650
 Wire Wire Line
 	1350 5100 1350 5150
 Wire Wire Line
-	1200 5650 1350 5650
+	1200 5650 1450 5650
 Wire Wire Line
 	2050 5650 1950 5650
 Connection ~ 1350 5650
@@ -791,7 +812,7 @@ Wire Wire Line
 Wire Wire Line
 	9250 1050 9250 1150
 Wire Wire Line
-	9750 1150 9850 1150
+	9750 1150 10700 1150
 Wire Wire Line
 	9850 1150 9850 1000
 Connection ~ 9850 1150
@@ -814,11 +835,11 @@ Wire Wire Line
 Wire Wire Line
 	8600 1250 8600 1150
 Wire Wire Line
-	7650 1150 7750 1150
+	7650 1150 7800 1150
 Wire Wire Line
-	8200 1600 8200 1550
+	8200 1600 8200 1450
 Wire Wire Line
-	7750 1550 8200 1550
+	7750 1550 8600 1550
 Connection ~ 8200 1550
 Connection ~ 7750 1150
 Wire Wire Line
@@ -863,7 +884,7 @@ Wire Notes Line
 Wire Wire Line
 	8150 2450 8350 2450
 Wire Wire Line
-	8250 2250 8250 2500
+	8250 2250 8250 2950
 Wire Wire Line
 	8250 2950 8600 2950
 Wire Wire Line
@@ -891,12 +912,12 @@ Wire Notes Line
 Wire Notes Line
 	850  3850 3100 3850
 Wire Wire Line
-	8100 5500 8200 5500
+	8100 5500 8600 5500
 Connection ~ 8200 5500
 Wire Wire Line
 	8050 4650 8050 4600
 Wire Wire Line
-	8050 4600 8200 4600
+	8050 4600 8600 4600
 Wire Notes Line
 	7350 3350 9100 3350
 NoConn ~ 1750 1700
@@ -916,7 +937,7 @@ Wire Notes Line
 Text Notes 1400 5550 0    60   ~ 0
 <- P-channel ->
 $Comp
-L stepper-rescue:Q_PMOS_GSD Q3
+L Q_PMOS_GSD Q3
 U 1 1 59875BDE
 P 4500 5650
 F 0 "Q3" H 4700 5700 50  0000 L CNN
@@ -927,7 +948,7 @@ F 3 "" H 4500 5650 50  0001 C CNN
 	1    0    0    1   
 $EndComp
 $Comp
-L stepper-rescue:R-RESCUE-stepper R7
+L R-RESCUE-stepper R7
 U 1 1 59875BE4
 P 3950 5650
 F 0 "R7" V 4030 5650 50  0000 C CNN
@@ -938,7 +959,7 @@ F 3 "" H 3950 5650 60  0000 C CNN
 	0    1    1    0   
 $EndComp
 $Comp
-L stepper-rescue:R-RESCUE-stepper R5
+L R-RESCUE-stepper R5
 U 1 1 59875BEA
 P 3600 5400
 F 0 "R5" V 3680 5400 50  0000 C CNN
@@ -949,7 +970,7 @@ F 3 "" H 3600 5400 60  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L stepper-rescue:+5V #PWR025
+L +5V #PWR025
 U 1 1 59875BF0
 P 3600 5100
 F 0 "#PWR025" H 3600 4950 50  0001 C CNN
@@ -960,7 +981,7 @@ F 3 "" H 3600 5100 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L stepper-rescue:+5V #PWR026
+L +5V #PWR026
 U 1 1 59875BF6
 P 4600 5350
 F 0 "#PWR026" H 4600 5200 50  0001 C CNN
@@ -977,16 +998,19 @@ OUT3
 Wire Wire Line
 	3600 5100 3600 5150
 Wire Wire Line
-	3450 5650 3600 5650
+	3450 5650 3700 5650
+Wire Wire Line
+	4300 5650 4200 5650
 Connection ~ 3600 5650
 Wire Wire Line
 	4600 5350 4600 5450
 Wire Wire Line
 	4600 5850 5050 5850
+Connection ~ 4250 5650
 Text Notes 3650 5550 0    60   ~ 0
 <- P-channel ->
 $Comp
-L stepper-rescue:Q_PMOS_GSD Q2
+L Q_PMOS_GSD Q2
 U 1 1 5987675E
 P 4500 4100
 F 0 "Q2" H 4700 4150 50  0000 L CNN
@@ -997,7 +1021,7 @@ F 3 "" H 4500 4100 50  0001 C CNN
 	1    0    0    1   
 $EndComp
 $Comp
-L stepper-rescue:R-RESCUE-stepper R6
+L R-RESCUE-stepper R6
 U 1 1 59876764
 P 3950 4100
 F 0 "R6" V 4030 4100 50  0000 C CNN
@@ -1008,7 +1032,7 @@ F 3 "" H 3950 4100 60  0000 C CNN
 	0    1    1    0   
 $EndComp
 $Comp
-L stepper-rescue:R-RESCUE-stepper R4
+L R-RESCUE-stepper R4
 U 1 1 5987676A
 P 3600 3850
 F 0 "R4" V 3680 3850 50  0000 C CNN
@@ -1019,7 +1043,7 @@ F 3 "" H 3600 3850 60  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L stepper-rescue:+5V #PWR027
+L +5V #PWR027
 U 1 1 59876770
 P 3600 3550
 F 0 "#PWR027" H 3600 3400 50  0001 C CNN
@@ -1030,7 +1054,7 @@ F 3 "" H 3600 3550 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L stepper-rescue:+5V #PWR028
+L +5V #PWR028
 U 1 1 59876776
 P 4600 3800
 F 0 "#PWR028" H 4600 3650 50  0001 C CNN
@@ -1047,12 +1071,15 @@ OUT1
 Wire Wire Line
 	3600 3550 3600 3600
 Wire Wire Line
-	3450 4100 3600 4100
+	3450 4100 3700 4100
+Wire Wire Line
+	4300 4100 4200 4100
 Connection ~ 3600 4100
 Wire Wire Line
 	4600 3800 4600 3900
 Wire Wire Line
 	4600 4300 5050 4300
+Connection ~ 4250 4100
 Text Notes 3650 4000 0    60   ~ 0
 <- P-channel ->
 Wire Notes Line
@@ -1064,7 +1091,7 @@ Wire Notes Line
 Wire Notes Line
 	5400 3300 850  3300
 Wire Wire Line
-	8150 2850 8450 2850
+	8150 2850 8500 2850
 Wire Wire Line
 	8450 2850 8450 2600
 Wire Wire Line
@@ -1072,19 +1099,19 @@ Wire Wire Line
 Wire Wire Line
 	8600 2650 8600 2700
 Wire Wire Line
-	8600 2650 8400 2650
+	8600 2650 8150 2650
 Wire Wire Line
 	8400 3150 8400 2650
 Connection ~ 8400 2650
 Connection ~ 8450 2850
 Wire Wire Line
-	8350 2400 8350 2450
+	8350 2400 8350 3050
 Text Label 9100 5400 0    61   ~ 0
 RXD
 Text Label 9100 5500 0    61   ~ 0
 TXD
 $Comp
-L stepper-rescue:CONN_02X10 J1
+L CONN_02X10 J1
 U 1 1 5988822E
 P 8850 5050
 F 0 "J1" H 8850 5650 50  0000 C CNN
@@ -1096,7 +1123,7 @@ F 3 "" H 8850 3900 50  0001 C CNN
 $EndComp
 Connection ~ 8200 4600
 $Comp
-L stepper-rescue:Q_PMOS_GSD Q1
+L Q_PMOS_GSD Q1
 U 1 1 59834381
 P 2250 5650
 F 0 "Q1" H 2450 5700 50  0000 L CNN
@@ -1116,7 +1143,7 @@ Wire Wire Line
 	8600 2500 8250 2500
 Connection ~ 8250 2500
 $Comp
-L my_elements:HOLE HOLE2
+L HOLE HOLE2
 U 1 1 59B6BC5E
 P 6000 7200
 F 0 "HOLE2" H 6000 7200 60  0000 C CNN
@@ -1127,7 +1154,7 @@ F 3 "" H 6000 7200 60  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L my_elements:HOLE HOLE1
+L HOLE HOLE1
 U 1 1 59B6D60D
 P 5950 6900
 F 0 "HOLE1" H 5950 6900 60  0000 C CNN
@@ -1138,7 +1165,7 @@ F 3 "" H 5950 6900 60  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L stepper-rescue:Conn_01x03 P2
+L Conn_01x03 P2
 U 1 1 5BB234EF
 P 10900 1250
 F 0 "P2" H 10900 1450 50  0000 C CNN
@@ -1148,56 +1175,4 @@ F 3 "" H 10900 1250 50  0001 C CNN
 	1    10900 1250
 	1    0    0    -1  
 $EndComp
-Wire Wire Line
-	800  1700 800  1850
-Wire Wire Line
-	1500 1600 1750 1600
-Wire Wire Line
-	1500 1800 1750 1800
-Wire Wire Line
-	10300 3150 10500 3150
-Wire Wire Line
-	10500 3750 10550 3750
-Wire Wire Line
-	10300 3850 10550 3850
-Wire Wire Line
-	10100 3950 10550 3950
-Wire Wire Line
-	9400 3850 9400 3750
-Wire Wire Line
-	10500 3150 10700 3150
-Wire Wire Line
-	9400 3750 9400 3650
-Wire Wire Line
-	1350 5650 1450 5650
-Wire Wire Line
-	9850 1150 10700 1150
-Wire Wire Line
-	8200 1550 8200 1450
-Wire Wire Line
-	8200 1550 8600 1550
-Wire Wire Line
-	7750 1150 7800 1150
-Wire Wire Line
-	8200 5500 8600 5500
-Wire Wire Line
-	3600 5650 3700 5650
-Wire Wire Line
-	3600 4100 3700 4100
-Wire Wire Line
-	8400 2650 8150 2650
-Wire Wire Line
-	8450 2850 8500 2850
-Wire Wire Line
-	8200 4600 8600 4600
-Wire Wire Line
-	8350 2450 8350 3050
-Wire Wire Line
-	8250 2500 8250 2950
-Wire Wire Line
-	800  1450 800  1700
-Wire Wire Line
-	4200 5650 4300 5650
-Wire Wire Line
-	4200 4100 4300 4100
 $EndSCHEMATC
