@@ -123,23 +123,7 @@ INTERRUPT_HANDLER(I2C_IRQHandler, 19){}
 
 #if defined(STM8S105) || defined(STM8S005) ||  defined (STM8AF626x)
 // UART2 TX interrupt
-INTERRUPT_HANDLER(UART2_TX_IRQHandler, 20){
-    if(UART2_SR & UART_SR_TXE){
-        if(tx_len == 0){
-            UART2_CR2 &= ~UART_CR2_TIEN; // disable TXE interrupt
-            tx_idx = 0;
-            return;
-        }
-        if(tx_idx < tx_len){
-            UART2_DR = UART_tx[tx_idx++];
-        }else{
-            UART2_CR2 &= ~UART_CR2_TIEN;
-            tx_idx = 0;
-            tx_len = 0;
-            return;
-        }
-    }
-}
+INTERRUPT_HANDLER(UART2_TX_IRQHandler, 20){}
 
 // UART2 RX interrupt
 INTERRUPT_HANDLER(UART2_RX_IRQHandler, 21){

@@ -157,6 +157,8 @@ void process_string(){
         rx_idx = 0;
         return;
     }
+    if(mcuno == BROADCAST_ADDR) broadcast = 1;
+    else broadcast = 0;
     // rx_idx is length of incoming message; next char is '\0', copy it too
     for(ctr = 0; ctr < rx_idx; ++ctr) *iptr++ = *optr++;
     rx_idx = 0; uart_rdy = 0; // command read, buffer ready to get more data

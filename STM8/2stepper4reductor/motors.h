@@ -34,7 +34,7 @@
 // amount of steps to pull off the switch
 #define PULLOFFTHESW_STEPS      (100)
 // amount of microsteps for acceleration calculation (50 full steps)
-#define ACCEL_USTEPS             (100)
+#define ACCEL_USTEPS            (100)
 
 //extern unsigned char irq_flag;
 
@@ -44,6 +44,6 @@ void motor_command(const char *cmd, char **bufptr);
 
 void stepper_interrupt(unsigned char motor_num);
 
-void process_stepper(unsigned char stepno);
+//void process_stepper(unsigned char stepno);
 
 #endif // __MOTORS_H__

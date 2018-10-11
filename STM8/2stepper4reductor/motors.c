@@ -123,6 +123,8 @@ static void stop_motor(U8 motorNum){
     }
     Steps_left[motorNum] = 0;
     Dir[motorNum] = DIR_STOP;
+    if(state[motorNum] == MOTOR_ZEROSTOP) Current_pos[motorNum] = 0;
+    state[motorNum] = MOTOR_RELAX;
 }
 
 static void strtobuf(const char *str, char **buff){
@@ -332,6 +334,8 @@ void motor_command(const char *cmd, char **buff){
 void stepper_interrupt(U8 motor_num){
     U8 tmp;
     U16 spd;
+    U8 sw = check_endsw(motor_num), st = state[motor_num];
+    U8 ccw = (Dir[motor_num] == DIR_CCW) ? 1 : 0;
     //irq_flag ^= 1 << motor_num;
     switch(motor_num){
         case 0:
@@ -367,25 +371,44 @@ void stepper_interrupt(U8 motor_num){
         default: return;
     }
     if(Ustep[motor_num] % 2 == 0){ // full amount of half-steps - increment step counters & check for stop
-        --Steps_left[motor_num];
-        if(Dir[motor_num] == DIR_CCW) --Current_pos[motor_num];
+        if(0 == --Steps_left[motor_num]) st = MOTOR_STOP;
+        if(ccw) --Current_pos[motor_num];
         else ++Current_pos[motor_num];
-        if(state[motor_num] == MOTOR_STOP || state[motor_num] == MOTOR_ZEROSTOP){
+        if(st == MOTOR_STOP || st == MOTOR_ZEROSTOP){
             stop_motor(motor_num);
             return;
         }
     }
-    if(Dir[motor_num] == DIR_CCW){ // counter-clockwise
+    if(ccw){ // counter-clockwise
         if(Ustep[motor_num] == 0) Ustep[motor_num] = 7;
         else --Ustep[motor_num];
     }else{ // clockwise
         if(++Ustep[motor_num] > 7) Ustep[motor_num] = 0;
     }
+    switch(st){
+        case MOTOR_OFFSWITCH: // don't care about endswitch for first PULLOFFTHESW_STEPS steps
+            if(Steps_left_at_esw[motor_num] - Steps_left[motor_num] >= PULLOFFTHESW_STEPS)
+                state[motor_num] = MOTOR_MOVENSTEPS;
+        break;
+        case MOTOR_MOVENSTEPS:
+        case MOTOR_INFMOVE: // set curpos to zero only in this state (after reaching ESW1)
+            if(sw){
+                if(ccw){
+                    if(st == MOTOR_INFMOVE){
+                        if(sw & 1) state[motor_num] = MOTOR_ZEROSTOP; // esw1 - stop @ zero when inf. left move
+                    }else state[motor_num] = MOTOR_STOP; // just stop at any esw in steps move
+                }else{ // +switch when move CW
+                    if(sw & 2) state[motor_num] = MOTOR_STOP; // stop in CW only on esw2 !!!
+                }
+            }
+        break;
+        default: break;
+    }
 }
 
 /**
  * Main state-machine process
- */
+ *
 void process_stepper(U8 motor_num){
     U8 sw = check_endsw(motor_num);
     U8 ccw = (Dir[motor_num] == DIR_CCW) ? 1 : 0;
@@ -408,18 +431,6 @@ void process_stepper(U8 motor_num){
                 }
             }
         break;
-        case MOTOR_STOP:
-            if(Dir[motor_num] == DIR_STOP){
-                state[motor_num] = MOTOR_RELAX;
-            }
-        break;
-        case MOTOR_ZEROSTOP:
-            if(Dir[motor_num] == DIR_STOP){
-                Current_pos[motor_num] = 0;
-                state[motor_num] = MOTOR_RELAX;
-            }
-        break;
         default: return; // MOTOR_RELAX
     }
-    //if(irq_flag & (1<<motor_num)) stepper_interrupt(motor_num);
-}
+}*/

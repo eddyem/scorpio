@@ -25,8 +25,8 @@
 #include "motors.h"
 
 int main() {
-        char A[3] = {'x', '\n', 0};
-    unsigned long T = 0L;
+        //char A[3] = {'x', '\n', 0};
+    //unsigned long T = 0L;
 
     if(RST_SR) RST_SR = 0x1f; // clear reset flags writing 1
     hw_init();
@@ -34,21 +34,23 @@ int main() {
     uart_init();
     // enable all interrupts
     enableInterrupts();
-    // remove this code if nesessary
+    /* remove this code if nesessary
         uart_write("\n\nHello! My address is ");
         A[0] = MCU_no + '0';
         uart_write(A);
         show_help(); // show protocol help @start
+        */
     // Loop
     do{
-        /*if(Global_time - T > paused_val){
+        /*if(Global_time - T > 10000){
+          ;
         }*/
         IWDG_KR = KEY_REFRESH; // refresh watchdog
         if(uart_rdy){
             process_string();
         }
-        process_stepper(0);
-        process_stepper(1);
+        /*process_stepper(0);
+        process_stepper(1);*/
     }while(1);
 }
 

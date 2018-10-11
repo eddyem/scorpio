@@ -24,28 +24,34 @@
 #include "uart.h"
 #include "hardware.h"
 
-U8 uart_rdy = 0;
-U8 rx_idx = 0, tx_idx = 0, tx_len = 0;
+U8 rx_idx = 0, uart_rdy = 0, broadcast = 0;
 
-U8 UART_rx[UART_BUF_LEN]; // buffers for received/transmitted data
-U8 UART_tx[UART_BUF_LEN];
+U8 UART_rx[UART_BUF_LEN]; // buffer for received data
 
 void uart_init(){
-    // PD5 - UART2_TX
-    PORT(UART_PORT, DDR) |= UART_TX_PIN;  // output
-    PORT(UART_PORT, CR1) &= ~UART_TX_PIN; // open-drain
+    // UART TX will automatically switch into PuPd mode when UART_CR2_TEN
     // 8 bit, no parity, 1 stop (UART_CR1/3 = 0 - reset value)
     // 9600 on 16MHz: DIV=0x0693 -> BRR1=0x68, BRR2=0x03
     UART2_BRR1 = 0x68; UART2_BRR2 = 0x03;
-    UART2_CR2 = UART_CR2_TEN | UART_CR2_REN | UART_CR2_RIEN; // Allow TX/RX, generate ints on rx
+    UART2_CR2 =  UART_CR2_REN | UART_CR2_RIEN; // Allow TX/RX, generate ints on rx
 }
 
 void uart_write(const char *str){
+    if(broadcast) return; // don't write anything on broadcast commands
+    UART2_CR2 |= UART_CR2_TEN; // turn Tx on
+    while(*str){
+        UART2_DR = *str++;
+        while(!(UART2_SR & UART_SR_TC));
+    }
+    UART2_CR2 &= ~UART_CR2_TEN; // turn Tx off
+    /*
     while(tx_len) {IWDG_KR = KEY_REFRESH;}
+    UART2_CR2 |= UART_CR2_TEN;
     do{
         UART_tx[tx_len++] = *str++;
     }while(*str && tx_len < UART_BUF_LEN);
     UART2_CR2 |= UART_CR2_TIEN; // enable TXE interrupt
+    */
 }
 
 void printUint(const U8 *val, U8 len){

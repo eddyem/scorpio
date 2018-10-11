@@ -28,9 +28,9 @@
 
 #define UART_BUF_LEN 32
 
+
 extern U8 UART_rx[];
-extern U8 UART_tx[];
-extern U8 uart_rdy, rx_idx, tx_idx, tx_len;
+extern U8 uart_rdy, rx_idx, broadcast;
 
 
 void uart_init();
