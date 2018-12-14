@@ -24,27 +24,34 @@
 #include "proto.h"
 #include "motors.h"
 
-int main() {
-        //char A[3] = {'x', '\n', 0};
-    //unsigned long T = 0L;
 
+int main() {
+#ifdef EBUG
+    char A[3] = {'x', '\n', 0};
+    unsigned long T = 0L;
+#endif
     if(RST_SR) RST_SR = 0x1f; // clear reset flags writing 1
     hw_init();
     motors_init();
     uart_init();
     // enable all interrupts
     enableInterrupts();
-    /* remove this code if nesessary
-        uart_write("\n\nHello! My address is ");
-        A[0] = MCU_no + '0';
-        uart_write(A);
-        show_help(); // show protocol help @start
-        */
+#ifdef EBUG
+    uart_write("\n\nHello! My address is ");
+    A[0] = MCU_no + '0';
+    uart_write(A);
+    show_help(); // show protocol help @start
+#endif
     // Loop
     do{
-        /*if(Global_time - T > 10000){
-          ;
-        }*/
+#ifdef EBUG
+        if(Global_time - T > 1000){
+          T = Global_time;
+          broadcast = 0;
+          printUint((U8*)&Global_time, 4);
+          uart_write("\n");
+        }
+#endif
         IWDG_KR = KEY_REFRESH; // refresh watchdog
         if(uart_rdy){
             process_string();

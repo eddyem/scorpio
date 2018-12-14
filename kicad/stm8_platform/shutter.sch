@@ -1,0 +1,315 @@
+EESchema Schematic File Version 2
+LIBS:power
+LIBS:device
+LIBS:switches
+LIBS:relays
+LIBS:motors
+LIBS:transistors
+LIBS:conn
+LIBS:linear
+LIBS:regul
+LIBS:74xx
+LIBS:cmos4000
+LIBS:adc-dac
+LIBS:memory
+LIBS:xilinx
+LIBS:microcontrollers
+LIBS:dsp
+LIBS:microchip
+LIBS:analog_switches
+LIBS:motorola
+LIBS:texas
+LIBS:intel
+LIBS:audio
+LIBS:interface
+LIBS:digital-audio
+LIBS:philips
+LIBS:display
+LIBS:cypress
+LIBS:siliconi
+LIBS:opto
+LIBS:atmel
+LIBS:contrib
+LIBS:valves
+EELAYER 25 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 1 1
+Title ""
+Date ""
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+$Comp
+L Q_PMOS_GSD Q1
+U 1 1 5BEC2C24
+P 3100 1550
+F 0 "Q1" H 3300 1600 50  0000 L CNN
+F 1 "AO3407" H 3300 1500 50  0000 L CNN
+F 2 "Package_TO_SOT_SMD:SOT-23_Handsoldering" H 3300 1650 50  0001 C CNN
+F 3 "" H 3100 1550 50  0001 C CNN
+	1    3100 1550
+	1    0    0    1   
+$EndComp
+$Comp
+L Q_PMOS_GSD Q2
+U 1 1 5BEC2DC3
+P 3100 2000
+F 0 "Q2" H 3300 2050 50  0000 L CNN
+F 1 "AO3407" H 3300 1950 50  0000 L CNN
+F 2 "Package_TO_SOT_SMD:SOT-23_Handsoldering" H 3300 2100 50  0001 C CNN
+F 3 "" H 3100 2000 50  0001 C CNN
+	1    3100 2000
+	1    0    0    -1  
+$EndComp
+$Comp
+L R R2
+U 1 1 5BEC2E75
+P 3050 2225
+F 0 "R2" V 3130 2225 50  0000 C CNN
+F 1 "47k" V 3050 2225 50  0000 C CNN
+F 2 "Resistor_SMD.pretty:R_0805_2012Metric_Pad1.29x1.40mm_HandSolder" V 2980 2225 50  0001 C CNN
+F 3 "" H 3050 2225 50  0001 C CNN
+	1    3050 2225
+	0    1    1    0   
+$EndComp
+$Comp
+L R R1
+U 1 1 5BEC2F43
+P 3050 1325
+F 0 "R1" V 3130 1325 50  0000 C CNN
+F 1 "47k" V 3050 1325 50  0000 C CNN
+F 2 "Resistor_SMD.pretty:R_0805_2012Metric_Pad1.29x1.40mm_HandSolder" V 2980 1325 50  0001 C CNN
+F 3 "" H 3050 1325 50  0001 C CNN
+	1    3050 1325
+	0    1    1    0   
+$EndComp
+$Comp
+L R R3
+U 1 1 5BEC30B7
+P 3750 1975
+F 0 "R3" V 3830 1975 50  0000 C CNN
+F 1 "47k" V 3750 1975 50  0000 C CNN
+F 2 "Resistor_SMD.pretty:R_0805_2012Metric_Pad1.29x1.40mm_HandSolder" V 3680 1975 50  0001 C CNN
+F 3 "" H 3750 1975 50  0001 C CNN
+	1    3750 1975
+	1    0    0    -1  
+$EndComp
+$Comp
+L Q_NMOS_GDS Q3
+U 1 1 5BEC31A0
+P 4025 1775
+F 0 "Q3" H 4225 1825 50  0000 L CNN
+F 1 "IRL3303" H 4225 1725 50  0000 L CNN
+F 2 "modules:TO-220-3_Horizontal_TabDown" H 4225 1875 50  0001 C CNN
+F 3 "" H 4025 1775 50  0001 C CNN
+	1    4025 1775
+	1    0    0    -1  
+$EndComp
+$Comp
+L Conn_01x02 J2
+U 1 1 5BEC34D5
+P 2075 1500
+F 0 "J2" H 2075 1600 50  0000 C CNN
+F 1 "CCD" H 2075 1300 50  0000 C CNN
+F 2 "modules:2PIN" H 2075 1500 50  0001 C CNN
+F 3 "" H 2075 1500 50  0001 C CNN
+	1    2075 1500
+	-1   0    0    1   
+$EndComp
+$Comp
+L Conn_01x02 J3
+U 1 1 5BEC351B
+P 2075 2100
+F 0 "J3" H 2075 2200 50  0000 C CNN
+F 1 "Button" H 2075 1900 50  0000 C CNN
+F 2 "modules:2PIN" H 2075 2100 50  0001 C CNN
+F 3 "" H 2075 2100 50  0001 C CNN
+	1    2075 2100
+	-1   0    0    1   
+$EndComp
+$Comp
+L Conn_01x02 J1
+U 1 1 5BEC3597
+P 2075 825
+F 0 "J1" H 2075 925 50  0000 C CNN
+F 1 "Power" H 2075 625 50  0000 C CNN
+F 2 "modules:2PIN_Pwr" H 2075 825 50  0001 C CNN
+F 3 "" H 2075 825 50  0001 C CNN
+	1    2075 825 
+	-1   0    0    1   
+$EndComp
+$Comp
+L Conn_01x02 J4
+U 1 1 5BEC377A
+P 4575 1375
+F 0 "J4" H 4575 1475 50  0000 C CNN
+F 1 "Sutter" H 4575 1175 50  0000 C CNN
+F 2 "modules:2PIN_Pwr" H 4575 1375 50  0001 C CNN
+F 3 "" H 4575 1375 50  0001 C CNN
+	1    4575 1375
+	1    0    0    -1  
+$EndComp
+$Comp
+L PWR_FLAG #FLG1
+U 1 1 5BEC3F0B
+P 2375 725
+F 0 "#FLG1" H 2375 800 50  0001 C CNN
+F 1 "PWR_FLAG" H 2375 875 50  0001 C CNN
+F 2 "" H 2375 725 50  0001 C CNN
+F 3 "" H 2375 725 50  0001 C CNN
+	1    2375 725 
+	1    0    0    -1  
+$EndComp
+$Comp
+L PWR_FLAG #FLG2
+U 1 1 5BEC3F72
+P 2375 825
+F 0 "#FLG2" H 2375 900 50  0001 C CNN
+F 1 "PWR_FLAG" H 2375 975 50  0001 C CNN
+F 2 "" H 2375 825 50  0001 C CNN
+F 3 "" H 2375 825 50  0001 C CNN
+	1    2375 825 
+	-1   0    0    1   
+$EndComp
+Wire Wire Line
+	2275 825  2525 825 
+Wire Wire Line
+	2275 725  2525 725 
+Connection ~ 2375 725 
+Connection ~ 2375 825 
+Wire Wire Line
+	2525 825  2525 875 
+$Comp
+L GND #PWR4
+U 1 1 5BEC3FE9
+P 2525 875
+F 0 "#PWR4" H 2525 625 50  0001 C CNN
+F 1 "GND" H 2525 725 50  0000 C CNN
+F 2 "" H 2525 875 50  0001 C CNN
+F 3 "" H 2525 875 50  0001 C CNN
+	1    2525 875 
+	1    0    0    -1  
+$EndComp
+$Comp
+L +12V #PWR3
+U 1 1 5BEC401B
+P 2525 725
+F 0 "#PWR3" H 2525 575 50  0001 C CNN
+F 1 "+12V" H 2525 865 50  0000 C CNN
+F 2 "" H 2525 725 50  0001 C CNN
+F 3 "" H 2525 725 50  0001 C CNN
+	1    2525 725 
+	1    0    0    -1  
+$EndComp
+$Comp
+L +12V #PWR5
+U 1 1 5BEC432E
+P 3200 1300
+F 0 "#PWR5" H 3200 1150 50  0001 C CNN
+F 1 "+12V" H 3200 1440 50  0000 C CNN
+F 2 "" H 3200 1300 50  0001 C CNN
+F 3 "" H 3200 1300 50  0001 C CNN
+	1    3200 1300
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	3200 1300 3200 1350
+$Comp
+L +12V #PWR6
+U 1 1 5BEC455C
+P 3200 2275
+F 0 "#PWR6" H 3200 2125 50  0001 C CNN
+F 1 "+12V" H 3200 2415 50  0000 C CNN
+F 2 "" H 3200 2275 50  0001 C CNN
+F 3 "" H 3200 2275 50  0001 C CNN
+	1    3200 2275
+	-1   0    0    1   
+$EndComp
+Wire Wire Line
+	3200 2200 3200 2275
+Wire Wire Line
+	3200 1750 3200 1800
+Wire Wire Line
+	3825 1775 3200 1775
+Connection ~ 3200 1775
+Wire Wire Line
+	3750 2125 4125 2125
+Wire Wire Line
+	4125 1975 4125 2175
+Wire Wire Line
+	3750 1775 3750 1825
+Connection ~ 3750 1775
+Connection ~ 4125 2125
+$Comp
+L GND #PWR7
+U 1 1 5BEC4F62
+P 4125 2175
+F 0 "#PWR7" H 4125 1925 50  0001 C CNN
+F 1 "GND" H 4125 2025 50  0000 C CNN
+F 2 "" H 4125 2175 50  0001 C CNN
+F 3 "" H 4125 2175 50  0001 C CNN
+	1    4125 2175
+	1    0    0    -1  
+$EndComp
+Connection ~ 3200 2225
+Connection ~ 3200 1325
+Wire Wire Line
+	2900 1325 2900 1550
+$Comp
+L GND #PWR1
+U 1 1 5BEC5B15
+P 2275 1575
+F 0 "#PWR1" H 2275 1325 50  0001 C CNN
+F 1 "GND" H 2275 1425 50  0000 C CNN
+F 2 "" H 2275 1575 50  0001 C CNN
+F 3 "" H 2275 1575 50  0001 C CNN
+	1    2275 1575
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	2275 1575 2275 1500
+$Comp
+L GND #PWR2
+U 1 1 5BEC5D85
+P 2275 2150
+F 0 "#PWR2" H 2275 1900 50  0001 C CNN
+F 1 "GND" H 2275 2000 50  0000 C CNN
+F 2 "" H 2275 2150 50  0001 C CNN
+F 3 "" H 2275 2150 50  0001 C CNN
+	1    2275 2150
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	2275 2150 2275 2100
+Wire Wire Line
+	2275 2000 2900 2000
+Connection ~ 2900 2000
+Wire Wire Line
+	2275 1400 2900 1400
+Connection ~ 2900 1400
+Wire Wire Line
+	2900 2000 2900 2225
+Wire Wire Line
+	4125 1575 4125 1475
+Wire Wire Line
+	4125 1475 4375 1475
+$Comp
+L +12V #PWR8
+U 1 1 5BEC666C
+P 4375 1275
+F 0 "#PWR8" H 4375 1125 50  0001 C CNN
+F 1 "+12V" H 4375 1415 50  0000 C CNN
+F 2 "" H 4375 1275 50  0001 C CNN
+F 3 "" H 4375 1275 50  0001 C CNN
+	1    4375 1275
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	4375 1275 4375 1375
+$EndSCHEMATC

@@ -41,17 +41,9 @@ void uart_write(const char *str){
     UART2_CR2 |= UART_CR2_TEN; // turn Tx on
     while(*str){
         UART2_DR = *str++;
-        while(!(UART2_SR & UART_SR_TC));
+        while(!(UART2_SR & UART_SR_TC)){IWDG_KR = KEY_REFRESH;}
     }
     UART2_CR2 &= ~UART_CR2_TEN; // turn Tx off
-    /*
-    while(tx_len) {IWDG_KR = KEY_REFRESH;}
-    UART2_CR2 |= UART_CR2_TEN;
-    do{
-        UART_tx[tx_len++] = *str++;
-    }while(*str && tx_len < UART_BUF_LEN);
-    UART2_CR2 |= UART_CR2_TIEN; // enable TXE interrupt
-    */
 }
 
 void printUint(const U8 *val, U8 len){

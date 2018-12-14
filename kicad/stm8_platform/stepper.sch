@@ -1,6 +1,7 @@
-EESchema Schematic File Version 4
+EESchema Schematic File Version 2
+LIBS:power
 LIBS:stepper-cache
-EELAYER 26 0
+EELAYER 25 0
 EELAYER END
 $Descr A4 11693 8268
 encoding utf-8
@@ -217,9 +218,9 @@ F 3 "" H 9450 2550 60  0000 C CNN
 $EndComp
 Text Label 9650 2400 0    61   ~ 0
 GND
-Text Label 9650 2500 0    61   ~ 0
+Text Label 9700 2600 0    61   ~ 0
 RXD
-Text Label 9650 2600 0    61   ~ 0
+Text Label 9700 2500 0    61   ~ 0
 TXD
 $Comp
 L stepper-rescue:GND-RESCUE-stepper #PWR06
@@ -718,11 +719,11 @@ Wire Wire Line
 Wire Wire Line
 	1600 1400 1750 1400
 Wire Wire Line
-	1750 1500 1750 1600
+	1750 1600 1750 1500
 Wire Wire Line
 	1200 1700 1200 1600
 Wire Wire Line
-	1200 1600 1500 1600
+	1200 1600 1750 1600
 Connection ~ 800  1700
 Wire Wire Line
 	2500 3650 2400 3650
@@ -731,7 +732,7 @@ Wire Wire Line
 Wire Wire Line
 	1450 3650 1350 3650
 Wire Wire Line
-	1350 1800 1500 1800
+	1350 1800 1750 1800
 Wire Wire Line
 	1500 1800 1500 1600
 Connection ~ 1500 1600
@@ -743,18 +744,18 @@ Wire Wire Line
 Wire Wire Line
 	10650 2400 10650 2500
 Wire Wire Line
-	10100 3150 10300 3150
+	10100 3150 10700 3150
 Connection ~ 10300 3150
 Wire Wire Line
 	10300 3850 10300 3650
 Wire Wire Line
 	10100 3650 10100 3950
 Wire Wire Line
-	10050 3950 10100 3950
+	10050 3950 10550 3950
 Wire Wire Line
-	10050 3850 10300 3850
+	10050 3850 10550 3850
 Wire Wire Line
-	10050 3750 10500 3750
+	10050 3750 10550 3750
 Wire Wire Line
 	10500 3750 10500 3650
 Connection ~ 10500 3750
@@ -763,7 +764,7 @@ Connection ~ 10100 3950
 Wire Wire Line
 	9400 3750 9450 3750
 Wire Wire Line
-	9450 3950 9400 3950
+	9400 3950 9450 3950
 Wire Wire Line
 	9450 3850 9400 3850
 Connection ~ 9400 3850
@@ -772,11 +773,11 @@ Wire Wire Line
 Connection ~ 10500 3150
 Connection ~ 9400 3750
 Wire Wire Line
-	9400 3950 9400 3850
+	9400 3650 9400 3950
 Wire Wire Line
 	1350 5100 1350 5150
 Wire Wire Line
-	1200 5650 1350 5650
+	1200 5650 1450 5650
 Wire Wire Line
 	2050 5650 1950 5650
 Connection ~ 1350 5650
@@ -791,7 +792,7 @@ Wire Wire Line
 Wire Wire Line
 	9250 1050 9250 1150
 Wire Wire Line
-	9750 1150 9850 1150
+	9750 1150 10700 1150
 Wire Wire Line
 	9850 1150 9850 1000
 Connection ~ 9850 1150
@@ -814,11 +815,11 @@ Wire Wire Line
 Wire Wire Line
 	8600 1250 8600 1150
 Wire Wire Line
-	7650 1150 7750 1150
+	7650 1150 7800 1150
 Wire Wire Line
-	8200 1600 8200 1550
+	8200 1450 8200 1600
 Wire Wire Line
-	7750 1550 8200 1550
+	7750 1550 8600 1550
 Connection ~ 8200 1550
 Connection ~ 7750 1150
 Wire Wire Line
@@ -863,7 +864,7 @@ Wire Notes Line
 Wire Wire Line
 	8150 2450 8350 2450
 Wire Wire Line
-	8250 2250 8250 2500
+	8250 2250 8250 2950
 Wire Wire Line
 	8250 2950 8600 2950
 Wire Wire Line
@@ -891,12 +892,12 @@ Wire Notes Line
 Wire Notes Line
 	850  3850 3100 3850
 Wire Wire Line
-	8100 5500 8200 5500
+	8100 5500 8600 5500
 Connection ~ 8200 5500
 Wire Wire Line
 	8050 4650 8050 4600
 Wire Wire Line
-	8050 4600 8200 4600
+	8050 4600 8600 4600
 Wire Notes Line
 	7350 3350 9100 3350
 NoConn ~ 1750 1700
@@ -977,7 +978,7 @@ OUT3
 Wire Wire Line
 	3600 5100 3600 5150
 Wire Wire Line
-	3450 5650 3600 5650
+	3450 5650 3700 5650
 Connection ~ 3600 5650
 Wire Wire Line
 	4600 5350 4600 5450
@@ -1047,7 +1048,7 @@ OUT1
 Wire Wire Line
 	3600 3550 3600 3600
 Wire Wire Line
-	3450 4100 3600 4100
+	3450 4100 3700 4100
 Connection ~ 3600 4100
 Wire Wire Line
 	4600 3800 4600 3900
@@ -1064,7 +1065,7 @@ Wire Notes Line
 Wire Notes Line
 	5400 3300 850  3300
 Wire Wire Line
-	8150 2850 8450 2850
+	8150 2850 8500 2850
 Wire Wire Line
 	8450 2850 8450 2600
 Wire Wire Line
@@ -1072,16 +1073,16 @@ Wire Wire Line
 Wire Wire Line
 	8600 2650 8600 2700
 Wire Wire Line
-	8600 2650 8400 2650
+	8150 2650 8600 2650
 Wire Wire Line
-	8400 3150 8400 2650
+	8400 2650 8400 3150
 Connection ~ 8400 2650
 Connection ~ 8450 2850
 Wire Wire Line
-	8350 2400 8350 2450
-Text Label 9100 5400 0    61   ~ 0
-RXD
+	8350 2400 8350 3050
 Text Label 9100 5500 0    61   ~ 0
+RXD
+Text Label 9100 5400 0    61   ~ 0
 TXD
 $Comp
 L stepper-rescue:CONN_02X10 J1
@@ -1113,7 +1114,7 @@ Wire Wire Line
 	8350 2400 8600 2400
 Connection ~ 8350 2450
 Wire Wire Line
-	8600 2500 8250 2500
+	8250 2500 8600 2500
 Connection ~ 8250 2500
 $Comp
 L my_elements:HOLE HOLE2
@@ -1149,53 +1150,7 @@ F 3 "" H 10900 1250 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
-	800  1700 800  1850
-Wire Wire Line
-	1500 1600 1750 1600
-Wire Wire Line
-	1500 1800 1750 1800
-Wire Wire Line
-	10300 3150 10500 3150
-Wire Wire Line
-	10500 3750 10550 3750
-Wire Wire Line
-	10300 3850 10550 3850
-Wire Wire Line
-	10100 3950 10550 3950
-Wire Wire Line
-	9400 3850 9400 3750
-Wire Wire Line
-	10500 3150 10700 3150
-Wire Wire Line
-	9400 3750 9400 3650
-Wire Wire Line
-	1350 5650 1450 5650
-Wire Wire Line
-	9850 1150 10700 1150
-Wire Wire Line
-	8200 1550 8200 1450
-Wire Wire Line
-	8200 1550 8600 1550
-Wire Wire Line
-	7750 1150 7800 1150
-Wire Wire Line
-	8200 5500 8600 5500
-Wire Wire Line
-	3600 5650 3700 5650
-Wire Wire Line
-	3600 4100 3700 4100
-Wire Wire Line
-	8400 2650 8150 2650
-Wire Wire Line
-	8450 2850 8500 2850
-Wire Wire Line
-	8200 4600 8600 4600
-Wire Wire Line
-	8350 2450 8350 3050
-Wire Wire Line
-	8250 2500 8250 2950
-Wire Wire Line
-	800  1450 800  1700
+	800  1450 800  1850
 Wire Wire Line
 	4200 5650 4300 5650
 Wire Wire Line
